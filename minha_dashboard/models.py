@@ -43,7 +43,7 @@ class nc_financeiro(models.Model):
         managed = False
         db_table = 'nc_financeiro'
     def __str__(self):
-        return self.data
+        return self.cliente
 
 class lista(models.Model):
     cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
