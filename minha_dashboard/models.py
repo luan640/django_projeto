@@ -102,16 +102,16 @@ class tempo(models.Model):
         return self.Cliente
 
 class avaliacao(models.Model):
-    Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    DATA = models.DateField(db_column='DATA', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Pedido = models.CharField(db_column='Pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Data_do_pedido = models.CharField(db_column='Data_do_pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Avaliacao = models.CharField(db_column='Avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Data_da_avaliação = models.CharField(db_column='Data_da_avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Comentário = models.CharField(db_column='Comentário', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Status = models.CharField(db_column='Status', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Unnamed_6 = models.CharField(db_column='Unnamed__6', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Loja  = models.CharField(db_column='Loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.DateField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    Pepedidodido = models.CharField(db_column='pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data_do_pedido = models.CharField(db_column='data_do_pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    avaliação = models.CharField(db_column='avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data_da_avaliação = models.CharField(db_column='data_da_avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    comentário = models.CharField(db_column='comentário', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    status = models.CharField(db_column='status', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    Unnunnamed_6amed_6 = models.CharField(db_column='unnamed_6', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    loja  = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
