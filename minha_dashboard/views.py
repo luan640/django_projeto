@@ -74,7 +74,10 @@ def home(request):
 
     df=pd.DataFrame(item)
 
-    #df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].astype(float)
+    df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
+    df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
+    
+    df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].astype(float)
     df['faturamento_real'] = df['faturamento_real'].astype(float)
     df['nps_medio'] = df['nps_medio'].astype(float)
     df['numero_de_comentários'] = df['numero_de_comentários'].astype(float)
