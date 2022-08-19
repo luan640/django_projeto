@@ -1,0 +1,916 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block 'titulo' %}Dashboard{% endblock %}
+
+{% block 'head' %}
+
+{% endblock %}
+
+{% block 'body' %}
+
+<body style="background-color:#181735;">
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+
+
+.font {
+  font-size: 15px;
+}
+
+.bg-igrowth{
+    background-color: #242549;
+    color: white;
+}
+  
+.button1 {
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+    text-align: center;  
+    color:white;
+
+}
+
+.form_date{
+    color:black;
+}
+
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #d1caca;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  color: white;
+}
+
+.accordion {
+  background-color: #eee;
+  color: #444;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+  transition: 0.4s;
+}
+
+.active, .accordion:hover {
+  background-color: #ccc; 
+}
+
+.panel {
+  padding: 0 18px;
+  display: none;
+  background-color: white;
+  overflow: hidden;
+}
+
+.sidenav {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  background-color: #181735;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 90px;
+}
+
+.sidenav a {
+    
+  padding: 8px;
+  text-decoration: none;
+  font-size: 25px;
+  color: white;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidenav .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
+
+@media screen and (max-height: 120px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+.table-wrapper {
+    max-height: 500px;
+    overflow-y: auto;
+}
+
+
+#name-loja {
+    -webkit-appearance: none;
+    /* Remove estilo padrão do Chrome */
+    -moz-appearance: none;
+    /* Remove estilo padrão do FireFox */
+    appearance: none;
+    /* Remove estilo padrão do FireFox*/
+    background: url(http://www.webcis.com.br/images/imagens-noticias/select/ico-seta-appearance.gif) no-repeat #eeeeee;
+    /* Imagem de fundo (Seta) */
+    background-position: 218px center;
+    /*Posição da imagem do background*/
+    width: 320px;
+    /* Tamanho do select, maior que o tamanho da div "div-select" */
+    height: 30px;
+    /* Altura do select, importante para que tenha a mesma altura em todo os navegadores */
+    border: 1px solid #ddd;
+}
+
+.title-side{
+
+color:white;
+text-align: center;
+}
+
+
+</style>
+
+<div class = "container">
+ 
+    <div id="mySidenav" class="sidenav button1">
+        <div class = "title-side">
+            <h3>Filtros</h3>
+        </div>
+
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>      
+        <div class = "container">
+            <div class="row">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    <div class="row">
+                        <label>Loja</label>
+                        <select name="name-loja" id="name-loja">
+
+                            <option disabled='true' selected>---Todas as Lojas---</option>
+                            {% for post in item_lista %}
+                                <option>{{ post.Loja }}</option>
+                            {% endfor %} 
+                            
+                        </select>
+                    </div>
+
+                    <div class="row">
+                        <label>Data início: </label>
+                        <input class="form-control-md-4 form_date" name='start_date' type="date">
+                    </div>
+
+                    <div class="row">
+                        <label>Data fim: </label>
+                        <input class="form-control-md-4 form_date" name='end_date' type="date">
+                    </div>
+
+                    <div class="row">
+                        <button class="btn btn-primary btn-lg align-items-center button1" type="submit">Filtrar</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; Menu</span>
+    <br>
+    <div class="row">  
+        <div class="col-md">
+            
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Faturamento mensal</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbspR$ {{faturamento_card}}<span id="faturamento_total"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Ticket médio</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbspR$ {{ticket_card}}<span id="ticket_medio"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Total de pedidos</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbsp {{num_pedidos}}<span id="total_pedidos"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 11rem;">
+                <div class="card-header">NPS</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbsp {{nps_card}}<span id="nps_medio"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 12rem;">
+                <div class="card-header">Incentivos</div>
+                <div class="card-body">
+                  <h6 class="card-title">Loja</h6>
+                  <p class="card-text"> &nbsp {{incentivo_loja}}</p>
+                  <h6 class="card-title">Ifood</h6>
+                  <p class="card-text"> &nbsp {{incentivo_ifood}}</p>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 12rem;">
+                <div class="card-header">Cancelamentos</div>
+                <div class="card-body">
+                  <h6 class="card-title">Loja</h6>
+                  <p class="card-text"> &nbsp {{canc_restaurante}}</p>
+                  <h6 class="card-title">Cliente</h6>
+                  <p class="card-text"> &nbsp {{canc_cliente}}</p>
+                </div>
+              </div>
+        </div>
+
+    </div>
+          
+        <div class="row">
+            <div class="col-md" >
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="faturamento-dia" width="100" height="90"></canvas>
+                </div>
+            </div>
+
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+
+                    <br>
+                    <canvas id="pedidos_mensal" width="100" height="90"></canvas>
+            
+                </div>
+            </div>
+
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="incentivos-mensal" width="100" height="90"></canvas>
+
+                </div>
+            </div>
+        </div>   
+
+        <div class="row">
+            
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="pedidos-dia" width="100" height="90"></canvas>
+                </div>
+            </div>
+            
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="cancelamento-mes" width="100" height="90"></canvas>
+            
+                </div>
+            </div>
+
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="nps-dia" width="100" height="90"></canvas>
+            
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row">
+            
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="faturamento_mensal" width="130" height="50"></canvas>
+                </div>        
+            </div>>
+    
+        </div>
+    </div>
+</div>
+
+<div class = "container"> 
+
+    <div class="col-md button1" >
+    
+        <h2>Lista de itens desabilitados</h2>
+        <div class = "table-wrapper">
+            
+            <table class = "table bg-igrowth">
+                <tr align = "center">
+                    <th>Loja</th>
+                    <th>Categoria</th>
+                    <th>Produto</th>
+                    <th>Data</th>
+                </tr>
+
+                {% for item in lista0 %}
+                <tr align='center'>
+                    <td>{{ item.LOJA }}</td>
+                    <td>{{ item.Categoria }}</td>
+                    <td>{{ item.Produto }}</td>
+                    <td>{{ item.DATA }}</td>
+                </tr>
+                {% endfor %}
+
+            </table>
+        </div>
+    </div> 
+        
+
+    <div class="col-md button1" >
+        <h2>Promoções</h2>
+            <div class = "table-wrapper bg-igrowth">
+                <table class = 'table bg-igrowth'>
+                    <tr align = 'center'>
+                        <th>Loja</th>
+                        <th>Promocao</th>
+                        <th>Status</th>
+                        <th>Data</th>
+
+                    </tr>
+
+                    {% for item1 in lista1 %}
+                    <tr align='center'>
+                        <td>{{ item1.Loja }}</td>
+                        <td>{{ item1.Promoção }}</td>
+                        <td>{{ item1.Status }}</td>
+                        <td>{{ item1.DATA }}</td>
+                        
+                    </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        
+    <div class="col-md button1" >
+        <h2>Tempo de entrega</h2>
+            <table class = 'table bg-igrowth'>
+                    <tr align = 'center'>
+                        <th>Loja</th>
+                        <th>tempo de entrega</th>
+                        <th>Data</th>
+                        <th>Hora</th>
+
+                    </tr>
+                
+                    {% for item2 in lista2 %}
+                    <tr align='center'>
+                        <td>{{ item2.Loja }}</td>
+                        <td>{{ item2.Tempo_de_Entrega }}</td>
+                        <td>{{ item2.Data }}</td>     
+                        <td>{{ item2.Hora }}</td>                        
+                
+                    </tr>
+                    {% endfor %}
+                </div>
+            </table>
+    </div>
+
+    <div class="col-md button1" >
+        <h2>Avaliações</h2>
+            <div class = "table-wrapper">
+                <table class = 'table bg-igrowth'>
+                    <div style="overflow-y: scroll;">
+                        <tr align = 'center'>
+                            <th>Loja</th>
+                            <th>Status</th>
+                            <th>Avaliação</th>
+                            <th>Comentário</th>
+                            <th>Data</th>
+
+                        </tr>
+                    
+                        {% for item3 in lista3 %}
+                        <tr align='center'>
+                            <td>{{ item3.Loja }}</td>
+                            <td>{{ item3.Status }}</td>
+                            <td>{{ item3.Avaliacao }}</td> 
+                            <td>{{ item3.Comentário }}</td> 
+                            <td>{{ item3.Data_da_avaliação }}</td>                        
+                        
+                        </tr>
+                        {% endfor %}
+                    </div>
+                </table>
+        </div>
+    </div>
+
+    <div class="col-md button1" >
+        <h2>Listas</h2>
+            <div class = "table-wrapper">
+                <table class = 'table bg-igrowth'>
+                    <div style="overflow-y: scroll;">
+                        <tr align = 'center'>
+                            <th>Loja</th>
+                            <th>Lista</th>
+                            <th>Status</th>
+                            <th>Data</th>
+                        </tr>
+                        {% for item4 in lista4 %}
+                        <tr align='center'>
+                            <td>{{ item4.Loja }}</td>
+                            <td>{{ item4.Lista }}</td>
+                            <td>{{ item4.Status }}</td> 
+                            <td>{{ item4.Data }}</td>                        
+                        </tr>
+                        {% endfor %}
+                    </div>
+                </table>
+            </div>  
+        </div> 
+    </div>
+</div>
+
+
+    <br>
+
+
+    <footer class="container">
+        <br>
+        <div class="row">
+            <div style="color: white;" class="col-md centralizar">
+              CNPJ: 00.000.000/0000-00
+            </div>
+    
+            <div style="color: white;" class="col-md centralizar">
+              2022 iGrowth. Todos os direitos reservados.
+            </div>
+    
+            <div style="color: white;" class="col-md centralizar">
+              email@email.com.br
+            </div>
+        </div>
+        <br>
+    
+      </footer>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="{% static 'js/js.js' %}"></script>
+
+<script>
+
+    var data_data = {{nps_dia_dados|safe}};
+    var data_labels = {{nps_dia_labels|safe}};
+
+    let ctx = document.getElementById("nps-dia").getContext("2d");
+
+    let chart = new Chart(ctx, {
+    type: "line",
+    data: {
+        labels: data_labels,
+        datasets: [
+            {
+            label: "Nps por dia",
+            backgroundColor: "#79AEC8",
+            borderColor: "#329D9C",
+            borderWidth: 1,
+            data: data_data
+            }
+        ]
+    },
+    options: {
+        elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                lineTension: 0.6,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Nps por dia',
+                        font: {
+                            size: 20
+                        }
+                    }
+                }
+            }
+    });
+
+</script>
+
+<script>
+
+    var cancelamento_cliente = {{cancelamento_cliente|safe}};
+    var cancelamento_loja = {{cancelamento_loja|safe}};
+    var labels_cancelamentos = {{labels_cancelamentos|safe}};
+
+    let ctx1 = document.getElementById("cancelamento-mes").getContext("2d");
+
+    let chart1 = new Chart(ctx1, {
+    type: "bar",
+    data: {
+        labels: labels_cancelamentos,
+        datasets: [
+            {
+            label: "Loja",
+            backgroundColor: "#329D9C",
+            borderColor: "#329D9C",
+            data: cancelamento_loja
+            },
+            {
+            label: "Cliente",
+            backgroundColor: "#56C596",
+            borderColor: "#56C596",
+            data: cancelamento_cliente
+            }
+        ]
+    },
+    options: {
+                plugins: {
+                    title: {
+                        display: true,
+                        text: 'Relação de cancelamentos R$',
+                        font: {
+                            size: 20
+                        }
+                    }
+                }
+            }
+    });
+
+</script>
+
+<script>
+
+    var i_loja = {{i_loja|safe}};
+    var i_ifood = {{i_ifood|safe}};
+    var labels_incentivo = {{labels_incentivo|safe}};
+
+    let ctx3 = document.getElementById("incentivos-mensal").getContext("2d");
+
+    let chart3 = new Chart(ctx3, {
+    type: "line",
+    data: {
+        labels: labels_incentivo,
+        datasets: [
+            {
+            label: "Loja",
+            backgroundColor: "#329D9C",
+            borderColor: "#329D9C",
+            yAxisID: 'A',
+            borderWidth: 1,
+            data: i_loja,
+            },
+            {
+            label: "Ifood",
+            backgroundColor: "#56C596",
+            borderColor: "#56C596",
+            yAxisID: 'B',
+            borderWidth: 1,
+            data: i_ifood
+
+            }
+        ]
+    },
+    options: {
+        elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: 'Incentivos mensal',
+                    font: {
+                        size: 20
+                    }
+                  }
+                },
+                scales: {
+                  A: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                  },
+                  B: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right', 
+            
+                    // grid line settings
+                    grid: {
+                      drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                  },
+                }
+            }
+    });
+
+</script>
+
+<script>
+
+    var fat_bruto = {{fat_bruto|safe}};
+    var taxa_efetiva = {{taxa_efetiva|safe}};
+    var labels_fat = {{labels_fat|safe}};
+
+    let ctx4 = document.getElementById("faturamento_mensal").getContext("2d");
+
+    let chart4 = new Chart(ctx4, {
+    type: "line",
+        data: {
+            labels: labels_fat,
+            datasets: [
+            {
+            type:'line',
+            label: 'taxa efetiva',
+            data: taxa_efetiva,
+            backgroundColor: "#56C596",
+            borderColor: "#56C596",
+            yAxisID: 'A',
+            borderWidth: 1
+            },   
+            {
+            type:'bar',
+            label: 'Faturamento bruto',
+            data: fat_bruto,
+            backgroundColor: "#329D9C",
+            borderColor: "#329D9C",
+            yAxisID: 'B',
+            borderWidth: 0.2
+            },
+            ]
+        },
+
+        options: {
+            
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: 'Fat. bruto x Tx. efetiva',
+                    font: {
+                        size: 20
+                    }
+                  }
+                },
+                scales: {
+                  A: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                  },
+                  B: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+            
+                    // grid line settings
+                    grid: {
+                      drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                  },
+                }
+            }
+
+
+
+    });
+
+</script>
+
+<script>
+
+    var numero_pedidos = {{numero_pedidos|safe}};
+    var tm = {{tm|safe}};
+    var labels_pedidos_tm = {{labels_pedidos_tm|safe}};
+
+    let ctx5 = document.getElementById("pedidos_mensal").getContext("2d");
+
+    let chart5 = new Chart(ctx5, {
+        data: {
+            labels: labels_pedidos_tm,
+            datasets: [
+            {
+            type:'line',
+            label: 'Ticket médio',
+            data: tm,
+            backgroundColor: "#56C596",
+            borderColor: "#56C596",
+            yAxisID: 'A',
+            borderWidth: 1
+            },
+            {
+            type:'bar',
+            label: 'Pedidos',
+            data: numero_pedidos,
+            backgroundColor: "#329D9C",
+            borderColor: "#329D9C",
+            yAxisID: 'B',
+            borderWidth: 0.2
+            },
+
+            ]
+        },
+
+        options: {
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                stacked: false,
+                plugins: {
+                  title: {
+                    display: true,
+                    text: 'Pedidos x Ticket médio',
+                    font: {
+                        size: 20
+                    }
+                  }
+                },
+                scales: {
+                  A: {
+                    type: 'linear',
+                    display: true,
+                    position: 'left',
+                  },
+                  B: {
+                    type: 'linear',
+                    display: true,
+                    position: 'right',
+            
+                    // grid line settings
+                    grid: {
+                      drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                  },
+                }
+            }
+    
+    });
+
+</script>
+
+<script>
+
+    var fat_dia1 = {{fat_dia1|safe}};
+    var labels_fat_dia = {{labels_fat_dia|safe}};
+
+    let ctx6 = document.getElementById("faturamento-dia").getContext("2d");
+
+    let chart6 = new Chart(ctx6, {
+        data: {
+            labels: labels_fat_dia,
+            datasets: [
+            {
+            type:'line',
+            label: 'Faturamento bruto diário',
+            data: fat_dia1,
+            backgroundColor: "#56C596",
+            borderColor: "#56C596",
+            borderWidth: 1
+            }
+            ]
+        },
+
+        options: {
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+            animations: {
+                tension: {
+                    duration: 1000,
+                    easing: 'linear',
+                    from: 1,
+                    to: 0,
+                    loop: true
+                }
+                },
+                lineTension: 0.6,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Faturamento bruto por dia',
+                            font: {
+                                size: 20
+                            }
+                        }
+                    }
+            }
+    
+    });
+
+</script>
+
+<script>
+
+    var pedido_dia1 = {{pedido_dia1|safe}};
+    var labels_pedidos_dia = {{labels_pedidos_dia|safe}};
+
+    let ctx7 = document.getElementById("pedidos-dia").getContext("2d");
+
+    let chart7 = new Chart(ctx7, {
+        data: {
+            labels: labels_pedidos_dia,
+            datasets: [
+            {
+            type:'line',
+            label: 'Pedidos por dia',
+            data: pedido_dia1,
+            backgroundColor: "#329D9C",
+            borderColor: "#329D9C",
+            borderWidth: 1
+            }
+            ]
+        },
+
+        options: {
+            elements: {
+                    point:{
+                        radius: 0
+                    }
+                },
+                responsive: true,
+                interaction: {
+                  mode: 'index',
+                  intersect: false,
+                },
+                lineTension: 0.6,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'Pedidos por dia',
+                            font: {
+                                size: 20
+                            }
+                        }
+                    }
+            }
+
+    });
+
+</script>
+
+<script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "300px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+</script>
+
+{% endblock %}
+
+</body>
