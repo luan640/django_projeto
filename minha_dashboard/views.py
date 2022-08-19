@@ -104,11 +104,11 @@ def home(request):
 ##tabela avaliações
 
     if name_loja == None:
-        lista3 = avaliacao.objects.filter(Cliente = request.user, Data_da_avaliação__range = [last_5days, today0])
+        lista3 = avaliacao.objects.filter(cliente = request.user, data_da_avaliação__range = [last_5days, today0])
     elif name_loja != "":
-        lista3 = avaliacao.objects.filter(Cliente = request.user, Loja = name_loja, Data_da_avaliação__range = [last_5days, today0])
+        lista3 = avaliacao.objects.filter(cliente = request.user, loja = name_loja, data_da_avaliação__range = [last_5days, today0])
     else:
-        lista3 = avaliacao.objects.filter(Cliente = request.user, Data_da_avaliação__range = [last_5days, today0])
+        lista3 = avaliacao.objects.filter(cliente = request.user, data_da_avaliação__range = [last_5days, today0])
 
 ##tabela listas
 

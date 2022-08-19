@@ -117,7 +117,7 @@ class avaliacao(models.Model):
         managed = False
         db_table = 'avaliacao'
     def __str__(self):
-        return self.Cliente
+        return self.cliente
 
 class lojas(models.Model):
     Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
