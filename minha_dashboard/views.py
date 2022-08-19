@@ -66,7 +66,7 @@ def home(request):
     
     try:
         df=pd.DataFrame(item)
-        df['nps_médio'] = df['nps_médio'].replace(np.nan,0)
+        df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
         df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
         df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
     except:
@@ -76,7 +76,7 @@ def home(request):
 
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].astype(float)
     df['faturamento_real'] = df['faturamento_real'].astype(float)
-    df['nps_médio'] = df['nps_médio'].astype(float)
+    df['nps_medio'] = df['nps_medio'].astype(float)
     df['numero_de_comentários'] = df['numero_de_comentários'].astype(float)
     df['numero_de_avaliações'] = df['numero_de_avaliações'].astype(float)
         
@@ -345,34 +345,34 @@ def home(request):
 
     ###NPS_CARD###
     
-    df['nps_médio'] = df['nps_médio'].replace(np.nan,0)
+    df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
 
     if name_loja == None:
-        nps_card = df[df['nps_médio'] != 0].mean()
+        nps_card = df[df['nps_medio'] != 0].mean()
         
     elif name_loja != "":
         nps_card = df[df['restaurante'] == name_loja]
-        nps_card = nps_card[nps_card['nps_médio'] != 0].mean()
+        nps_card = nps_card[nps_card['nps_medio'] != 0].mean()
 
     else:
-        nps_card = df[df['nps_médio'] != 0].mean()
+        nps_card = df[df['nps_medio'] != 0].mean()
 
-    nps_card = nps_card.nps_médio
+    nps_card = nps_card.nps_medio
 
     if math.isnan(float(nps_card)):
         nps_card = 0
     
     ###NPS_DIA_GRÁFICO###
 
-    df['nps_médio'] = df['nps_médio'].replace(np.nan,0)
+    df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
     df2 = df.groupby(by=['data'], dropna=False).mean()
-    df2 = df2[['nps_médio']]
+    df2 = df2[['nps_medio']]
     df2.reset_index(inplace=True)
 
     df2['data'] = pd.to_datetime(df2['data'])
     df2['data'] = df2['data'].dt.strftime('%Y-%m-%d')
 
-    nps_dia = df2['nps_médio'].tolist()
+    nps_dia = df2['nps_medio'].tolist()
     labels_nps = df2['data'].tolist()
         
     ###PEDIDOS_DIA_GRÁFICO###

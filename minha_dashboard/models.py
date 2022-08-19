@@ -5,39 +5,39 @@ from django.contrib.auth.models import User
 
 class nc_financeiro(models.Model):
     cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    restaurante = models.CharField(db_column='RESTAURANTE', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    data = models.DateField(db_column='DATA', blank=True, null=True)  # Field name made lowercase.
-    mes = models.IntegerField(db_column='MES', blank=True, null=True)  # Field name made lowercase.
-    ano = models.IntegerField(db_column='ANO', blank=True, null=True)  # Field name made lowercase.
-    dia = models.IntegerField(db_column='DIA', blank=True, null=True)  # Field name made lowercase.
-    total_do_pedido = models.FloatField(db_column='TOTAL_DO_PEDIDO', blank=True, null=True)  # Field name made lowercase.
-    valor_dos_itens = models.FloatField(db_column='VALOR_DOS_ITENS', blank=True, null=True)  # Field name made lowercase.
-    incentivo_ifood = models.CharField(db_column='INCENTIVO_IFOOD', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    incentivo_loja = models.FloatField(db_column='INCENTIVO_LOJA', blank=True, null=True)  # Field name made lowercase.
-    faturamento_liquido = models.IntegerField(db_column='FATURAMENTO_LIQUIDO', blank=True, null=True)  # Field name made lowercase.
-    valor_de_taxa_de_transacao = models.FloatField(db_column='VALOR_DE_TAXA_DE_TRANSACAO', blank=True, null=True)  # Field name made lowercase.
-    valor_de_taxa_de_1_semana = models.FloatField(db_column='VALOR_DE_TAXA_DE_1_SEMANA', blank=True, null=True)  # Field name made lowercase.
-    numero_de_pedidos = models.IntegerField(db_column='NUMERO_DE_PEDIDOS', blank=True, null=True)  # Field name made lowercase.
-    numero_de_cancelamentos = models.IntegerField(db_column='NUMERO_DE_CANCELAMENTOS', blank=True, null=True)  # Field name made lowercase.
-    valor_bruto_cancelado_na_plataforma = models.IntegerField(db_column='VALOR_BRUTO_CANCELADO_NA_PLATAFORMA', blank=True, null=True)  # Field name made lowercase.
-    valor_liquido_cancelado_na_plataforma = models.IntegerField(db_column='VALOR_LIQUIDO_CANCELADO_NA_PLATAFORMA', blank=True, null=True)  # Field name made lowercase.
-    taxa_de_entrega = models.FloatField(db_column='TAXA_DE_ENTREGA', blank=True, null=True)  # Field name made lowercase.
-    faturamento_bruto = models.FloatField(db_column='FATURAMENTO_BRUTO', blank=True, null=True)  # Field name made lowercase.
-    cancelamento_percent = models.FloatField(db_column='CANCELAMENTO_PERCENT', blank=True, null=True)  # Field name made lowercase.
-    cancelamento_pelo_cliente = models.IntegerField(db_column='CANCELAMENTO_PELO_CLIENTE', blank=True, null=True)  # Field name made lowercase.
-    cancelamento_pelo_cliente_percent = models.FloatField(db_column='CANCELAMENTO_PELO_CLIENTE_PERCENT', blank=True, null=True)  # Field name made lowercase.
-    cancelamento_pelo_restaurante = models.IntegerField(db_column='CANCELAMENTO_PELO_RESTAURANTE', blank=True, null=True)  # Field name made lowercase.
-    cancelamento_pelo_restaurante_percent = models.FloatField(db_column='CANCELAMENTO_PELO_RESTAURANTE_PERCENT', blank=True, null=True)  # Field name made lowercase.
-    faturamento_real = models.FloatField(db_column='FATURAMENTO_REAL', blank=True, null=True)  # Field name made lowercase.
-    ticket_medio = models.FloatField(db_column='TICKET_MEDIO', blank=True, null=True)  # Field name made lowercase.
-    ticket_medio_real = models.FloatField(db_column='TICKET_MEDIO_REAL', blank=True, null=True)  # Field name made lowercase.
-    incentivo_percent = models.FloatField(db_column='INCENTIVO_PERCENT', blank=True, null=True)  # Field name made lowercase.
-    taxa_efetiva = models.FloatField(db_column='TAXA_EFETIVA', blank=True, null=True)  # Field name made lowercase.
-    margem = models.FloatField(db_column='MARGEM', blank=True, null=True)  # Field name made lowercase.
-    taxa_de_cancelamento = models.FloatField(db_column='TAXA_DE_CANCELAMENTO', blank=True, null=True)  # Field name made lowercase.
-    nps_médio = models.FloatField(db_column='NPS_MÉDIO', blank=True, null=True)  # Field name made lowercase.
-    numero_de_comentários = models.IntegerField(db_column='NÚMERO_DE_COMENTÁRIOS', blank=True, null=True)  # Field name made lowercase.
-    numero_de_avaliações = models.IntegerField(db_column='NÚMERO_DE_AVALIAÇÕES', blank=True, null=True)  # Field name made lowercase.
+    restaurante = models.CharField(db_column='restaurante', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.DateField(db_column='data', blank=True, null=True)  # Field name made lowercase.
+    mes = models.IntegerField(db_column='mes', blank=True, null=True)  # Field name made lowercase.
+    ano = models.IntegerField(db_column='ano', blank=True, null=True)  # Field name made lowercase.
+    dia = models.IntegerField(db_column='dia', blank=True, null=True)  # Field name made lowercase.
+    total_do_pedido = models.FloatField(db_column='total_do_pedido', blank=True, null=True)  # Field name made lowercase.
+    valor_dos_itens = models.FloatField(db_column='valor_dos_itens', blank=True, null=True)  # Field name made lowercase.
+    incentivo_ifood = models.CharField(db_column='incentivo_ifood', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    incentivo_loja = models.FloatField(db_column='incentivo_loja', blank=True, null=True)  # Field name made lowercase.
+    faturamento_liquido = models.IntegerField(db_column='faturamento_liquido', blank=True, null=True)  # Field name made lowercase.
+    valor_de_taxa_de_transacao = models.FloatField(db_column='valor_de_taxa_de_transacao', blank=True, null=True)  # Field name made lowercase.
+    valor_de_taxa_de_1_semana = models.FloatField(db_column='valor_de_taxa_de_1_semana', blank=True, null=True)  # Field name made lowercase.
+    numero_de_pedidos = models.IntegerField(db_column='numero_de_pedidos', blank=True, null=True)  # Field name made lowercase.
+    numero_de_cancelamentos = models.IntegerField(db_column='numero_de_cancelamentos', blank=True, null=True)  # Field name made lowercase.
+    valor_bruto_cancelado_na_plataforma = models.IntegerField(db_column='valor_bruto_cancelado_na_plataforma', blank=True, null=True)  # Field name made lowercase.
+    valor_liquido_cancelado_na_plataforma = models.IntegerField(db_column='valor_liquido_cancelado_na_plataforma', blank=True, null=True)  # Field name made lowercase.
+    taxa_de_entrega = models.FloatField(db_column='taxa_de_entrega', blank=True, null=True)  # Field name made lowercase.
+    faturamento_bruto = models.FloatField(db_column='faturamento_bruto', blank=True, null=True)  # Field name made lowercase.
+    cancelamento_percent = models.FloatField(db_column='cancelamento_percent', blank=True, null=True)  # Field name made lowercase.
+    cancelamento_pelo_cliente = models.IntegerField(db_column='cancelamento_pelo_cliente', blank=True, null=True)  # Field name made lowercase.
+    cancelamento_pelo_cliente_percent = models.FloatField(db_column='cancelamento_pelo_cliente_percent', blank=True, null=True)  # Field name made lowercase.
+    cancelamento_pelo_restaurante = models.IntegerField(db_column='cancelamento_pelo_restaurante', blank=True, null=True)  # Field name made lowercase.
+    cancelamento_pelo_restaurante_percent = models.FloatField(db_column='cancelamento_pelo_restaurante_percent', blank=True, null=True)  # Field name made lowercase.
+    faturamento_real = models.FloatField(db_column='faturamento_real', blank=True, null=True)  # Field name made lowercase.
+    ticket_medio = models.FloatField(db_column='ticket_medio', blank=True, null=True)  # Field name made lowercase.
+    ticket_medio_real = models.FloatField(db_column='ticket_medio_real', blank=True, null=True)  # Field name made lowercase.
+    incentivo_percent = models.FloatField(db_column='incentivo_percent', blank=True, null=True)  # Field name made lowercase.
+    taxa_efetiva = models.FloatField(db_column='taxa_efetiva', blank=True, null=True)  # Field name made lowercase.
+    margem = models.FloatField(db_column='margem', blank=True, null=True)  # Field name made lowercase.
+    taxa_de_cancelamento = models.FloatField(db_column='taxa_de_cancelamento', blank=True, null=True)  # Field name made lowercase.
+    nps_medio = models.FloatField(db_column='nps_medio', blank=True, null=True)  # Field name made lowercase.
+    numero_de_comentarios = models.IntegerField(db_column='numero_de_comentarios', blank=True, null=True)  # Field name made lowercase.
+    numero_de_avaliacoes = models.IntegerField(db_column='numero_de_avaliacoes', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
