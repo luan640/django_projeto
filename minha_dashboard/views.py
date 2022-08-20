@@ -3,7 +3,7 @@ from distutils.log import error
 from re import template
 from django.shortcuts import render, redirect
 from datetime import date, datetime
-from .models import nc_financeiro, lista, disponibilidade, promocao, tempo, avaliacao, lista, lojas
+from .models import nc_financeiro, lista, disponibilidade, promocoes, tempo, avaliacao, lista, lojas
 import pandas as pd
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login
@@ -44,7 +44,7 @@ def submit_login(request):
 
 @login_required
 def home(request):
-     
+
     name_loja = ""
     
     if request.method == 'POST':
@@ -80,29 +80,29 @@ def home(request):
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].astype(float)
     df['faturamento_real'] = df['faturamento_real'].astype(float)
     df['nps_medio'] = df['nps_medio'].astype(float)
-    df['numero_de_comentários'] = df['numero_de_comentários'].astype(float)
-    df['numero_de_avaliações'] = df['numero_de_avaliações'].astype(float)
+    df['numero_de_comentarios'] = df['numero_de_comentarios'].astype(float)
+    df['numero_de_avaliacoes'] = df['numero_de_avaliacoes'].astype(float)
         
     ###LISTAS##
 
 ##tabela promocao
 
     if name_loja == None:
-        lista1 = promocao.objects.filter(Cliente = request.user, DATA = today0)
+        lista1 = promocoes.objects.filter(cliente = request.user, data = today0)
     elif name_loja != "":
-        lista1 = promocao.objects.filter(Loja = name_loja, Cliente = request.user, DATA = today0)
+        lista1 = promocoes.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
-        lista1 = promocao.objects.filter(Cliente = request.user, DATA = today0)
+        lista1 = promocoes.objects.filter(cliente = request.user, data = today0)
         
 ##tabela tempos
     
 
     if name_loja == None:
-        lista2 = tempo.objects.filter(Cliente = request.user, Data = today1)
+        lista2 = tempo.objects.filter(cliente = request.user, data = today0)
     elif name_loja != "":
-        lista2 = tempo.objects.filter(Loja = name_loja, Cliente = request.user, Data = today1)
+        lista2 = tempo.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
-        lista2 = tempo.objects.filter(Cliente = request.user, Data = today1)
+        lista2 = tempo.objects.filter(cliente = request.user, data = today0)
 
 ##tabela avaliações
 
@@ -117,21 +117,21 @@ def home(request):
 
 
     if name_loja == None:
-        lista4 = lista.objects.filter(cliente = request.user, Data = today0
+        lista4 = lista.objects.filter(cliente = request.user, data = today0
         )
     if name_loja != "":
-        lista4 = lista.objects.filter(Loja = name_loja, cliente = request.user, Data = today0)
+        lista4 = lista.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
-        lista4 = lista.objects.filter(cliente = request.user, Data = today0)
+        lista4 = lista.objects.filter(cliente = request.user, data = today0)
 
 ##tabela disponibilidade
 
     if name_loja == None:
-        lista0 = disponibilidade.objects.filter(Cliente= request.user, DATA = today0)
+        lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
     if name_loja != "":
-        lista0 = disponibilidade.objects.filter(LOJA = name_loja, Cliente= request.user, DATA = today0)
+        lista0 = disponibilidade.objects.filter(loja = name_loja, cliente= request.user, data = today0)
     else:
-        lista0 = disponibilidade.objects.filter(Cliente= request.user, DATA = today0)
+        lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
 
     ###INCENTIVOS_CARD###
 
@@ -393,8 +393,7 @@ def home(request):
     labels_pedidos_dia = pedido_dia['data'].tolist()
 
     ##LISTAS_LOJA_DROP_DOWN##
-            
-    item_lista = lojas.objects.values().filter(Cliente = request.user)
+    item_lista   = lojas.objects.values().filter(cliente = request.user)
 
     ## DICIONÁRIO COM VALORES ##
 

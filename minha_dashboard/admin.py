@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import avaliacao, disponibilidade, nc_financeiro, lista, promocao, tempo, lojas
+from .models import avaliacao, disponibilidade, nc_financeiro, lista, promocoes, tempo, lojas
 
 
 # Register your models here.
@@ -9,5 +9,5 @@ admin.site.register(nc_financeiro)
 admin.site.register(disponibilidade)
 admin.site.register(avaliacao)
 admin.site.register(tempo)
-admin.site.register(promocao)
+admin.site.register(promocoes)
 admin.site.register(lojas)

@@ -158,7 +158,7 @@ text-align: center;
 
                             <option disabled='true' selected>---Todas as Lojas---</option>
                             {% for post in item_lista %}
-                                <option>{{ post.Loja }}</option>
+                                <option>{{ post.lojas }}</option>
                             {% endfor %} 
                             
                         </select>
@@ -333,10 +333,10 @@ text-align: center;
 
                 {% for item in lista0 %}
                 <tr align='center'>
-                    <td>{{ item.LOJA }}</td>
-                    <td>{{ item.Categoria }}</td>
-                    <td>{{ item.Produto }}</td>
-                    <td>{{ item.DATA }}</td>
+                    <td>{{ item.loja }}</td>
+                    <td>{{ item.categoria }}</td>
+                    <td>{{ item.produto }}</td>
+                    <td>{{ item.data }}</td>
                 </tr>
                 {% endfor %}
 
@@ -351,7 +351,7 @@ text-align: center;
                 <table class = 'table bg-igrowth'>
                     <tr align = 'center'>
                         <th>Loja</th>
-                        <th>Promocao</th>
+                        <th>Promoção</th>
                         <th>Status</th>
                         <th>Data</th>
 
@@ -359,10 +359,10 @@ text-align: center;
 
                     {% for item1 in lista1 %}
                     <tr align='center'>
-                        <td>{{ item1.Loja }}</td>
-                        <td>{{ item1.Promoção }}</td>
-                        <td>{{ item1.Status }}</td>
-                        <td>{{ item1.DATA }}</td>
+                        <td>{{ item1.loja }}</td>
+                        <td>{{ item1.promoção }}</td>
+                        <td>{{ item1.status }}</td>
+                        <td>{{ item1.data }}</td>
                         
                     </tr>
                     {% endfor %}
@@ -382,10 +382,10 @@ text-align: center;
                 
                     {% for item2 in lista2 %}
                     <tr align='center'>
-                        <td>{{ item2.Loja }}</td>
-                        <td>{{ item2.Tempo_de_Entrega }}</td>
-                        <td>{{ item2.Data }}</td>     
-                        <td>{{ item2.Hora }}</td>                        
+                        <td>{{ item2.loja }}</td>
+                        <td>{{ item2.tempo_de_Entrega }}</td>
+                        <td>{{ item2.data }}</td>     
+                        <td>{{ item2.hora }}</td>                        
                 
                     </tr>
                     {% endfor %}
@@ -399,11 +399,11 @@ text-align: center;
                 <table class = 'table bg-igrowth'>
                     <div style="overflow-y: scroll;">
                         <tr align = 'center'>
-                            <th>Loja</th>
-                            <th>Status</th>
-                            <th>Avaliação</th>
-                            <th>Comentário</th>
-                            <th>Data</th>
+                            <th>loja</th>
+                            <th>status</th>
+                            <th>avaliação</th>
+                            <th>comentário</th>
+                            <th>data</th>
 
                         </tr>
                     
@@ -435,10 +435,10 @@ text-align: center;
                         </tr>
                         {% for item4 in lista4 %}
                         <tr align='center'>
-                            <td>{{ item4.Loja }}</td>
-                            <td>{{ item4.Lista }}</td>
-                            <td>{{ item4.Status }}</td> 
-                            <td>{{ item4.Data }}</td>                        
+                            <td>{{ item4.loja }}</td>
+                            <td>{{ item4.lista }}</td>
+                            <td>{{ item4.status }}</td> 
+                            <td>{{ item4.data }}</td>                        
                         </tr>
                         {% endfor %}
                     </div>

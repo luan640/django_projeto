@@ -87,25 +87,26 @@ WSGI_APPLICATION = 'dashboard.wsgi.application'
 #    }
 #}
 
-DATABASES = {
-   'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'dbsite',
-        'USER': 'root',
-        'PASSWORD':'15512332',
-        'HOST':'localhost'
-    }
-}
-
 #DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.postgresql',
-#        'USER': 'rbycalachuscjw',
-#        'PASSWORD': '1aaa5c04ee9d5a6c576fa84d52ed725a2285e36cf49fbde96b3aaf158c66b622',
-#        'HOST': 'ec2-3-208-79-113.compute-1.amazonaws.com',
-#        'PORT': '5432',
+#   'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#        'NAME': 'dbsite',
+#        'USER': 'root',
+#        'PASSWORD':'15512332',
+#        'HOST':'localhost'
 #    }
 #}
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'd8tk2jp04rs0q8',
+        'USER': 'nilxnuexdoxlvd',
+        'PASSWORD': 'c5d125e7a8b6a48412d8e848942c0b305d2b97ef6067fdc7760f24ccaf531f86',
+        'HOST': 'ec2-44-206-137-96.compute-1.amazonaws.com',
+        'PORT': '5432',
+    }
+}
 
 
 # Password validation

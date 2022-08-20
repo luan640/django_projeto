@@ -47,11 +47,11 @@ class nc_financeiro(models.Model):
 
 class lista(models.Model):
     cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Lista = models.CharField(db_column='Lista', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Status = models.CharField(db_column='Status', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Loja = models.CharField(db_column='Loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Data = models.CharField(db_column='Data', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Hora = models.CharField(db_column='Hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    lista = models.CharField(db_column='lista', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    status = models.CharField(db_column='status', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    loja = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.CharField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    hora = models.CharField(db_column='hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
@@ -60,46 +60,46 @@ class lista(models.Model):
         return self.cliente
 
 class disponibilidade(models.Model):
-    Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Categoria = models.CharField(db_column='Categoria', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Produto = models.CharField(db_column='Produto', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Disponibilidade = models.CharField(db_column='Disponibilidade', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    DATA = models.DateField(db_column='DATA', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    LOJA = models.CharField(db_column='LOJA', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Hora = models.CharField(db_column='Hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    categoria = models.CharField(db_column='categoria', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    produto = models.CharField(db_column='produto', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    disponibilidade = models.CharField(db_column='disponibilidade', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.DateField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    loja = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    hora = models.CharField(db_column='hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'disponibilidade'
     def __str__(self):
-        return self.Cliente
+        return self.cliente
 
-class promocao(models.Model):
-    Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Promoção = models.CharField(db_column='Promoção', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Status = models.CharField(db_column='Status', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    DATA = models.DateField(db_column='DATA', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Loja = models.CharField(db_column='Loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Hora = models.CharField(db_column='Hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
+class promocoes(models.Model):
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    promoção = models.CharField(db_column='promoção', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    status = models.CharField(db_column='status', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.DateField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    loja = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    hora = models.CharField(db_column='hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
-        db_table = 'promocao'
+        db_table = 'promocoes'
     def __str__(self):
-        return self.Cliente
+        return self.cliente
 
 class tempo(models.Model):
-    Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Data = models.CharField(db_column='Data', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Loja = models.CharField(db_column='Loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Hora = models.CharField(db_column='Hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Tempo_de_Entrega  = models.CharField(db_column='Tempo_de_Entrega', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data = models.CharField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    loja = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    hora = models.CharField(db_column='hora', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    tempo_de_entrega  = models.CharField(db_column='tempo_de_entrega', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'tempo'
     def __str__(self):
-        return self.Cliente
+        return self.cliente
 
 class avaliacao(models.Model):
     cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
@@ -110,7 +110,7 @@ class avaliacao(models.Model):
     data_da_avaliação = models.CharField(db_column='data_da_avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
     comentário = models.CharField(db_column='comentário', max_length=255, blank=True, null=True)  # Field name made lowercase.
     status = models.CharField(db_column='status', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Unnunnamed_6amed_6 = models.CharField(db_column='unnamed_6', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    unnamed_6 = models.CharField(db_column='unnamed_6', max_length=255, blank=True, null=True)  # Field name made lowercase.
     loja  = models.CharField(db_column='loja', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
@@ -120,11 +120,11 @@ class avaliacao(models.Model):
         return self.cliente
 
 class lojas(models.Model):
-    Cliente = models.CharField(db_column='Cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Loja  = models.CharField(db_column='Lojas', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    lojas  = models.CharField(db_column='lojas', max_length=255, blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
         db_table = 'lojas'
     def __str__(self):
-        return self.Cliente
+        return self.cliente
