@@ -76,6 +76,7 @@ def home(request):
         print('5')
     except:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+        item2 = avaliacao.objects.values().filter(cliente = request.user)
         print('6')
 
     df = pd.DataFrame(item)
