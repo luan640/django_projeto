@@ -54,26 +54,32 @@ def home(request):
 
         if start_date != "" and end_date != "" and name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, restaurante = name_loja) 
+            print('1')
 
         elif name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
+            print('2')
 
         elif start_date != "" and end_date != "":
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
+            print('3')
 
     else:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+        print('4')
     
     try:
         df=pd.DataFrame(item)
         df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
         df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
+        print('5')
+
     except:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+        print('6')
 
     df=pd.DataFrame(item)
 
-    print(df)
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
     df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
     
@@ -93,16 +99,16 @@ def home(request):
         lista1 = promocoes.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
         lista1 = promocoes.objects.filter(cliente = request.user, data = today0)
-        
+
 ##tabela tempos
     
-
     if name_loja == None:
         lista2 = tempo.objects.filter(cliente = request.user, data = today0)
     elif name_loja != "":
         lista2 = tempo.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
         lista2 = tempo.objects.filter(cliente = request.user, data = today0)
+
 
 ##tabela avaliações
 
@@ -115,11 +121,9 @@ def home(request):
 
 ##tabela listas
 
-
     if name_loja == None:
-        lista4 = lista.objects.filter(cliente = request.user, data = today0
-        )
-    if name_loja != "":
+        lista4 = lista.objects.filter(cliente = request.user, data = today0)
+    elif name_loja != "":
         lista4 = lista.objects.filter(loja = name_loja, cliente = request.user, data = today0)
     else:
         lista4 = lista.objects.filter(cliente = request.user, data = today0)
@@ -128,10 +132,11 @@ def home(request):
 
     if name_loja == None:
         lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
-    if name_loja != "":
+    elif name_loja != "":
         lista0 = disponibilidade.objects.filter(loja = name_loja, cliente= request.user, data = today0)
     else:
         lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
+
 
     ###INCENTIVOS_CARD###
 
