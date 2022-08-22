@@ -108,7 +108,7 @@ class tempo(models.Model):
 class avaliacao(models.Model):
     cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
     data = models.DateField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
-    Pepedidodido = models.CharField(db_column='pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    pedido = models.CharField(db_column='pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
     data_do_pedido = models.CharField(db_column='data_do_pedido', max_length=255, blank=True, null=True)  # Field name made lowercase.
     avaliação = models.CharField(db_column='avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.
     data_da_avaliação = models.CharField(db_column='data_da_avaliação', max_length=255, blank=True, null=True)  # Field name made lowercase.

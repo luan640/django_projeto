@@ -54,31 +54,32 @@ def home(request):
 
         if start_date != "" and end_date != "" and name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, restaurante = name_loja) 
+            item2 = avaliacao.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, loja = name_loja) 
             print('1')
-
         elif name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
+            item2 = avaliacao.objects.values().filter(cliente = request.user, loja = name_loja, mes = month_current)
             print('2')
-
         elif start_date != "" and end_date != "":
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
+            item2 = avaliacao.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
             print('3')
 
     else:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+        item2 = avaliacao.objects.values().filter(cliente = request.user)
         print('4')
-    
     try:
         df=pd.DataFrame(item)
         df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
         df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
         print('5')
-
     except:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
         print('6')
 
-    df=pd.DataFrame(item)
+    df = pd.DataFrame(item)
+    df_item2 = pd.DataFrame(item2)
 
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
     df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
@@ -353,34 +354,36 @@ def home(request):
 
     ###NPS_CARD###
     
-    df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
+    df_item2['avaliação'] = df_item2['avaliação'].replace(np.nan,0)
 
     if name_loja == None:
-        nps_card = df[df['nps_medio'] != 0].mean()
+        nps_card = df_item2[df_item2['avaliação'] != 0].mean()
         
     elif name_loja != "":
-        nps_card = df[df['restaurante'] == name_loja]
-        nps_card = nps_card[nps_card['nps_medio'] != 0].mean()
+        nps_card = df_item2[df_item2['loja'] == name_loja]
+        nps_card = nps_card[nps_card['avaliação'] != 0].mean()
 
     else:
-        nps_card = df[df['nps_medio'] != 0].mean()
+        nps_card = df_item2[df_item2['avaliação'] != 0].mean()
 
-    nps_card = nps_card.nps_medio
+    nps_card = nps_card.avaliação
 
     if math.isnan(float(nps_card)):
         nps_card = 0
-    
+
     ###NPS_DIA_GRÁFICO###
 
     #df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
-    df2 = df.groupby(by=['data'], dropna=False).mean()
-    df2 = df2[['nps_medio']]
+    df2 = df_item2.groupby(by=['data'], dropna=False).mean()
+    df2 = df2[['avaliação']]
     df2.reset_index(inplace=True)
 
     df2['data'] = pd.to_datetime(df2['data'])
+    df2['mes'] = df2['data'].dt.month
+    df2 = df2[df2['mes'] == month_current]
     df2['data'] = df2['data'].dt.strftime('%Y-%m-%d')
 
-    nps_dia = df2['nps_medio'].tolist()
+    nps_dia = df2['avaliação'].tolist()
     labels_nps = df2['data'].tolist()
         
     ###PEDIDOS_DIA_GRÁFICO###
