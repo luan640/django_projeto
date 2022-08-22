@@ -44,7 +44,7 @@ def submit_login(request):
 
 @login_required
 def home(request):
-
+   
     name_loja = ""
     
     if request.method == 'POST':
@@ -66,7 +66,6 @@ def home(request):
     
     try:
         df=pd.DataFrame(item)
-        df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
         df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
         df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
     except:
@@ -74,6 +73,7 @@ def home(request):
 
     df=pd.DataFrame(item)
 
+    print(df)
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
     df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
     
@@ -367,7 +367,7 @@ def home(request):
     
     ###NPS_DIA_GRÁFICO###
 
-    df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
+    #df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
     df2 = df.groupby(by=['data'], dropna=False).mean()
     df2 = df2[['nps_medio']]
     df2.reset_index(inplace=True)
