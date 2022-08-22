@@ -111,7 +111,6 @@ def home(request):
     else:
         lista2 = tempo.objects.filter(cliente = request.user, data = today0)
 
-
 ##tabela avaliações
 
     if name_loja == None:
@@ -356,6 +355,9 @@ def home(request):
     ###NPS_CARD###
     
     df_item2['avaliação'] = df_item2['avaliação'].replace(np.nan,0)
+    df_item2['data'] = pd.to_datetime(df_item2['data'])
+    df_item2['mes'] = df_item2['data'].dt.month
+    df_item2 = df_item2[df_item2['mes'] == month_current]
 
     if name_loja == None:
         nps_card = df_item2[df_item2['avaliação'] != 0].mean()
