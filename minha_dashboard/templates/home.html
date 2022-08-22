@@ -183,6 +183,10 @@ text-align: center;
     </div>
     <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; Menu</span>
     <br>
+
+</div>
+
+<div class = "container">
     <div class="row">  
         <div class="col-md">
             
@@ -249,7 +253,9 @@ text-align: center;
         </div>
 
     </div>
-          
+</div>
+
+<div class = "container">
         <div class="row">
             <div class="col-md" >
                 <div class="card text-white bg-igrowth mb-3 align-items-center button1"
@@ -313,7 +319,6 @@ text-align: center;
             </div>>
     
         </div>
-    </div>
 </div>
 
 <div class = "container"> 
@@ -448,10 +453,6 @@ text-align: center;
     </div>
 </div>
 
-
-    <br>
-
-
     <footer class="container">
         <br>
         <div class="row">
@@ -469,12 +470,15 @@ text-align: center;
         </div>
         <br>
     
-      </footer>
+    </footer>
 
-</div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="{% static 'js/js.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.0.0/chartjs-plugin-datalabels.min.js"
+integrity="sha512-R/QOHLpV1Ggq22vfDAWYOaMd5RopHrJNMxi8/lJu8Oihwi4Ho4BRFeiMiCefn9rasajKjnx9/fTQ/xkWnkDACg=="
+crossorigin="anonymous" referrerpolicy="no-referrer">
+</script>
 
 <script>
 
@@ -559,6 +563,15 @@ text-align: center;
                             size: 20
                         }
                     }
+                },
+                responsive: true,
+                scales: {
+                x: {
+                    stacked: true,
+                },
+                y: {
+                    stacked: true
+                }
                 }
             }
     });
@@ -708,10 +721,7 @@ text-align: center;
                     },
                   },
                 }
-            }
-
-
-
+            },
     });
 
 </script>
@@ -846,8 +856,8 @@ text-align: center;
                             }
                         }
                     }
-            }
-    
+            },
+                
     });
 
 </script>
@@ -896,7 +906,6 @@ text-align: center;
                         }
                     }
             }
-
     });
 
 </script>

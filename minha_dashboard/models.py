@@ -38,6 +38,10 @@ class nc_financeiro(models.Model):
     nps_medio = models.FloatField(db_column='nps_medio', blank=True, null=True)  # Field name made lowercase.
     numero_de_comentarios = models.IntegerField(db_column='numero_de_comentarios', blank=True, null=True)  # Field name made lowercase.
     numero_de_avaliacoes = models.IntegerField(db_column='numero_de_avaliacoes', blank=True, null=True)  # Field name made lowercase.
+    valor_da_comissao = models.FloatField(db_column='valor_da_comissao', blank=True, null=True)  # Field name made lowercase.
+    repasse_do_ifood = models.FloatField(db_column='repasse_do_ifood', blank=True, null=True)  # Field name made lowercase.
+    valor_balcao = models.FloatField(db_column='valor_balcao', blank=True, null=True)  # Field name made lowercase.
+    valor_balcao_real = models.FloatField(db_column='valor_balcao_real', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         managed = False
