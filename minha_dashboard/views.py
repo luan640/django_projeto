@@ -511,7 +511,7 @@ def home(request):
 
     return render(request, 'home.html', context)
 
-def logout_view(request):
+def logout(request):
     username = submit_login(request)
     if username != None:
         logout(request)
