@@ -512,5 +512,4 @@ def home(request):
 
 def logout_user(request):
     logout(request)
-    messages.success(request, ("Deslogado!"))
     return redirect('/login')
