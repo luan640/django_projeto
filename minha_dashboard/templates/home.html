@@ -178,13 +178,15 @@ text-align: center;
 
                 </form>
                 <br>
+
                 <div class="row">
-                    <form action="{% url 'logout' %}" method="post">
-                        {% csrf_token %}
-                        <button style="background-color:red;border-color: red;" class="btn btn-primary btn-lg align-items-center button1" type="submit" value ='Logout'>
-                            LOGOUT
-                        </button>
-                    </form>
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button style="background-color:red;border-color: red;" class="btn btn-primary btn-lg align-items-center button1" type="submit">
+                                LOGOUT
+                            </button>
+                        </form>
+
                 </div>
 
             </div>

@@ -6,14 +6,13 @@ from datetime import date, datetime
 from .models import nc_financeiro, lista, disponibilidade, promocoes, tempo, avaliacao, lista, lojas
 import pandas as pd
 from django.views.decorators.csrf import csrf_protect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 import numpy as np
 from datetime import date, timedelta
 from django.core.serializers import serialize
 import math
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import logout
 
 #yesterday = date.today() - timedelta(days=1)
 today = date.today()
@@ -511,8 +510,7 @@ def home(request):
 
     return render(request, 'home.html', context)
 
-def logout(request):
-    username = submit_login(request)
-    if username != None:
-        logout(request)
-        return redirect('/login/')
+def logout_user(request):
+    logout(request)
+    messages.success(request, ("Deslogado!"))
+    return redirect('/login')
