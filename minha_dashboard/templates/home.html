@@ -141,12 +141,10 @@ text-align: center;
 </style>
 
 <div class = "container">
- 
     <div id="mySidenav" class="sidenav button1">
         <div class = "title-side">
             <h3>Filtros</h3>
         </div>
-
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>      
         <div class = "container">
             <div class="row">
@@ -177,19 +175,53 @@ text-align: center;
                     <div class="row">
                         <button class="btn btn-primary btn-lg align-items-center button1" type="submit">Filtrar</button>
                     </div>
+                    
                 </form>
+
+                <form action="{% url 'logout' %}" method="post">
+                    {% csrf_token %}
+                    <button style="background-color:red;border-color: red;" class="btn btn-primary btn-lg align-items-center button1" type="submit" value ='Logout'>
+                        LOGOUT
+                    </button>
+                </form>
+
             </div>
         </div>
     </div>
-    <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; Menu</span>
-    <br>
+</div>
+
+<div class="container">
+
+    <div class="row">
+        
+        <div class="col-3">
+            <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; Menu</span>
+        </div>
+    
+        <div class="col-3">
+            <div class="card border-dark mb-3 button1 bg-igrowth" style="width: 40rem;">
+                <table style="color:white;">
+                    <tr align = "center">
+                    <th style="width: 40%">Restaurante</th>
+                    <th style="width: 40%">Data inicial</th>
+                    <th style="width: 40%">Data final</th>
+                    </tr>
+                    <tr align = "center">
+                    <td>{{ restaurante_atual }}</td>
+                    <td>{{ data_inicial }}</td>
+                    <td>{{ data_final }}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+    </div>
 
 </div>
 
 <div class = "container">
     <div class="row">  
         <div class="col-md">
-            
             <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
                 <div class="card-header">Faturamento mensal</div>
                 <div class="card-body">
@@ -199,7 +231,6 @@ text-align: center;
         </div>
 
         <div class="col-md">
-
             <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
                 <div class="card-header">Ticket médio</div>
                 <div class="card-body">
@@ -209,7 +240,6 @@ text-align: center;
         </div>
 
         <div class="col-md">
-
             <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
                 <div class="card-header">Total de pedidos</div>
                 <div class="card-body">
@@ -219,7 +249,6 @@ text-align: center;
         </div>
 
         <div class="col-md">
-
             <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 11rem;">
                 <div class="card-header">NPS</div>
                 <div class="card-body">
@@ -256,6 +285,16 @@ text-align: center;
 </div>
 
 <div class = "container">
+
+        <div class="row">  
+            <div class="col-md">
+                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
+                    <br>
+                    <canvas id="faturamento_mensal" width="130" height="50"></canvas>
+                </div>        
+            </div>>
+        </div>
+
         <div class="row">
             <div class="col-md" >
                 <div class="card text-white bg-igrowth mb-3 align-items-center button1"
@@ -307,17 +346,6 @@ text-align: center;
                 </div>
             </div>
 
-        </div>
-
-        <div class="row">
-            
-            <div class="col-md">
-                <div class="card text-white bg-igrowth mb-3 align-items-center button1"
-                    <br>
-                    <canvas id="faturamento_mensal" width="130" height="50"></canvas>
-                </div>        
-            </div>>
-    
         </div>
 </div>
 
@@ -595,7 +623,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             label: "Loja",
             backgroundColor: "#329D9C",
             borderColor: "#329D9C",
-            yAxisID: 'A',
             borderWidth: 1,
             data: i_loja,
             },
@@ -603,7 +630,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             label: "Ifood",
             backgroundColor: "#56C596",
             borderColor: "#56C596",
-            yAxisID: 'B',
             borderWidth: 1,
             data: i_ifood
 
@@ -631,23 +657,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                     }
                   }
                 },
-                scales: {
-                  A: {
-                    type: 'linear',
-                    display: true,
-                    position: 'left',
-                  },
-                  B: {
-                    type: 'linear',
-                    display: true,
-                    position: 'right', 
-            
-                    // grid line settings
-                    grid: {
-                      drawOnChartArea: false, // only want the grid lines for one axis to show up
-                    },
-                  },
-                }
             }
     });
 

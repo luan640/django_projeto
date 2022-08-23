@@ -13,6 +13,7 @@ from datetime import date, timedelta
 from django.core.serializers import serialize
 import math
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 
 #yesterday = date.today() - timedelta(days=1)
 today = date.today()
@@ -58,7 +59,7 @@ def home(request):
             print('1')
         elif name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
-            item2 = avaliacao.objects.values().filter(cliente = request.user, loja = name_loja, mes = month_current)
+            item2 = avaliacao.objects.values().filter(cliente = request.user, loja = name_loja)
             print('2')
         elif start_date != "" and end_date != "":
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
@@ -408,7 +409,23 @@ def home(request):
 
     ## DICIONÁRIO COM VALORES ##
 
+    if name_loja == None:
+        name_loja = "Todas as lojas"
+
+    try:
+        if start_date == '':
+            start_date = "Todas as data"
+    except:
+        start_date = ""
+        end_date = ""
+
     context={
+
+        ##LOJA E DATAS ATUAL##
+        
+        'data_inicial':start_date,
+        'data_final':end_date,
+        'restaurante_atual':name_loja,
 
         ###INCENTIVOS_CARD###
 
@@ -493,3 +510,9 @@ def home(request):
     }
 
     return render(request, 'home.html', context)
+
+def logout_view(request):
+    username = submit_login(request)
+    if username != None:
+        logout(request)
+        return redirect('/login/')
