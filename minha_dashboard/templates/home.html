@@ -687,7 +687,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             backgroundColor: "#56C596",
             borderColor: "#56C596",
             yAxisID: 'A',
-            borderWidth: 1
+            borderWidth: 1,
+            datalabels:{
+                anchor:'end',
+                align:'end'
+            }
             },   
             {
             type:'bar',
@@ -696,7 +700,11 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             backgroundColor: "#329D9C",
             borderColor: "#329D9C",
             yAxisID: 'B',
-            borderWidth: 0.2
+            borderWidth: 0.2,
+            datalabels:{
+                anchor:'end',
+                align:'end'
+            }
             },
             ]
         },
@@ -736,6 +744,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                   },
                 }
             },
+            plugins:[ChartDataLabels]
     });
 
 </script>
