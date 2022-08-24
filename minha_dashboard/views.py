@@ -311,6 +311,7 @@ def home(request):
 
     fatxtaxa['data'] = pd.to_datetime(fatxtaxa['data'])
     fatxtaxa['data'] = fatxtaxa['data'].dt.strftime('%Y-%m-%d')
+    fatxtaxa['taxa_efetiva'] = fatxtaxa['taxa_efetiva'].round(decimals = 2)
 
     fat_bruto = fatxtaxa['faturamento_bruto'].tolist()
     taxa_efetiva = fatxtaxa['taxa_efetiva'].tolist()
