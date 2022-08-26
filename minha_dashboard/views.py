@@ -3,7 +3,7 @@ from distutils.log import error
 from re import template
 from django.shortcuts import render, redirect
 from datetime import date, datetime
-from .models import nc_financeiro, lista, disponibilidade, promocoes, tempo, avaliacao, lista, lojas
+from .models import metas, metas_dia, nc_financeiro, lista, disponibilidade, promocoes, tempo, avaliacao, lista, lojas
 import pandas as pd
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth import authenticate, login, logout
@@ -19,9 +19,17 @@ today = date.today()
 
 today0 = today.strftime('%Y-%m-%d')
 today1 = today.strftime('%d/%m/%Y')
+
 last_5days = today - timedelta(5) 
 last_5days = last_5days.strftime('%Y-%m-%d')
+
 month_current = today.month
+
+desc_last_day = today.strftime('%A')
+desc_last_day = desc_last_day.lower()
+
+last_1days = (today - timedelta(1)).strftime('%Y-%m-%d') 
+current_day = (today - timedelta(1)).strftime('%Y-%m-%d') 
 
 def login_user(request):
     return render(request, 'login.html')
@@ -44,7 +52,7 @@ def submit_login(request):
 
 @login_required
 def home(request):
-   
+
     name_loja = ""
     
     if request.method == 'POST':
@@ -53,21 +61,20 @@ def home(request):
         name_loja = request.POST.get('name-loja')
 
         if start_date != "" and end_date != "" and name_loja != "" and name_loja != None:
-            item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, restaurante = name_loja) 
-            item2 = avaliacao.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, loja = name_loja) 
+            item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, restaurante = name_loja)
+ 
             print('1')
         elif name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
-            item2 = avaliacao.objects.values().filter(cliente = request.user, loja = name_loja)
+
             print('2')
         elif start_date != "" and end_date != "":
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
-            item2 = avaliacao.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
+
             print('3')
 
     else:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
-        item2 = avaliacao.objects.values().filter(cliente = request.user)
         print('4')
     try:
         df=pd.DataFrame(item)
@@ -76,11 +83,19 @@ def home(request):
         print('5')
     except:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
-        item2 = avaliacao.objects.values().filter(cliente = request.user)
         print('6')
 
+
     df = pd.DataFrame(item)
-    df_item2 = pd.DataFrame(item2)
+
+    item2 = avaliacao.objects.values().filter(cliente = request.user)
+    df2 = pd.DataFrame(item2)
+    df2.rename(columns={'loja':'restaurante', 'data':'data_data', 'data_da_avaliação':'data'}, inplace=True)
+    df2 = df2[['cliente','restaurante','data', 'avaliação']]
+    
+    df2_df = pd.merge(df, df2, how = 'outer', on = ['restaurante','cliente','data'])
+    df2_df = df2_df[df2_df['faturamento_bruto'].notna()]
+    
 
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
     df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
@@ -138,6 +153,15 @@ def home(request):
     else:
         lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
 
+    ####card_fat_danterior###
+
+    df['data'] = pd.to_datetime(df['data'])
+    card_fat_danterior = df[df['data'] == last_1days]
+    card_fat_danterior = df['faturamento_bruto'].sum()
+    
+    print(card_fat_danterior)
+
+    
 
     ###INCENTIVOS_CARD###
 
@@ -158,6 +182,7 @@ def home(request):
 
     incentivo_loja = round(incentivo_loja,2)
     incentivo_ifood = round(incentivo_ifood,2)
+    incentivo_geral = round(incentivo_loja + incentivo_ifood,2)
 
     incentivo_loja = '{0:,}'.format(incentivo_loja)
     incentivo_loja = incentivo_loja.replace(',','.')
@@ -174,6 +199,14 @@ def home(request):
     inicio = incentivo_ifood[:len(incentivo_ifood)-3]
     
     incentivo_ifood = inicio + fim
+
+    incentivo_geral = '{0:,}'.format(incentivo_geral)
+    incentivo_geral = incentivo_geral.replace(',','.')
+
+    fim = incentivo_geral[-3:].replace('.',',')
+    inicio = incentivo_geral[:len(incentivo_geral)-3]
+    
+    incentivo_geral = inicio + fim
 
     ###CANCELAMENTOS_CARD###
 
@@ -195,6 +228,7 @@ def home(request):
 
     canc_cliente = round(canc_cliente,2)
     canc_restaurante = round(canc_restaurante,2)
+    cancelamento_total = round(canc_cliente + canc_restaurante, 2)
 
     canc_cliente = '{0:,}'.format(canc_cliente)
     canc_cliente = canc_cliente.replace(',','.')
@@ -211,6 +245,14 @@ def home(request):
     inicio = canc_restaurante[:len(canc_restaurante)-3]
     
     canc_restaurante = inicio + fim
+
+    cancelamento_total = '{0:,}'.format(cancelamento_total)
+    cancelamento_total = cancelamento_total.replace(',','.')
+
+    fim = cancelamento_total[-3:].replace('.',',')
+    inicio = cancelamento_total[:len(cancelamento_total)-3]
+    
+    cancelamento_total = inicio + fim
     
     ###FATURAMENTO_CARD###
 
@@ -233,6 +275,24 @@ def home(request):
     inicio = faturamento_card[:len(faturamento_card)-3]
 
     faturamento_card = inicio + fim
+
+    ###taxa_efetiva_card###
+
+    if name_loja == None:
+        tx_efetiva_card = df['taxa_efetiva'].mean()
+
+    elif name_loja != "":
+        tx_efetiva_card = df[df['restaurante'] == name_loja]
+        tx_efetiva_card = tx_efetiva_card['taxa_efetiva'].mean()
+
+    else:
+        tx_efetiva_card = df['taxa_efetiva'].mean()
+    
+    tx_efetiva_card = round(tx_efetiva_card,2)
+
+    tx_efetiva_card = '{:.2%}'.format(tx_efetiva_card)
+
+    print(tx_efetiva_card)
 
     ###TICKET_MEDIO_CARD###
 
@@ -355,20 +415,20 @@ def home(request):
 
     ###NPS_CARD###
     
-    df_item2['avaliação'] = df_item2['avaliação'].replace(np.nan,0)
-    df_item2['data'] = pd.to_datetime(df_item2['data'])
-    df_item2['mes'] = df_item2['data'].dt.month
-    df_item2 = df_item2[df_item2['mes'] == month_current]
+    df2_df['avaliação'] = df2_df['avaliação'].replace(np.nan,0)
+    df2_df['data'] = pd.to_datetime(df2_df['data'])
+    df2_df['mes'] = df2_df['data'].dt.month
+    df2_df = df2_df[df2_df['mes'] == month_current]
 
     if name_loja == None:
-        nps_card = df_item2[df_item2['avaliação'] != 0].mean()
+        nps_card = df2_df[df2_df['avaliação'] != 0].mean()
         
     elif name_loja != "":
-        nps_card = df_item2[df_item2['loja'] == name_loja]
+        nps_card = df2_df[df2_df['restaurante'] == name_loja]
         nps_card = nps_card[nps_card['avaliação'] != 0].mean()
 
     else:
-        nps_card = df_item2[df_item2['avaliação'] != 0].mean()
+        nps_card = df2_df[df2_df['avaliação'] != 0].mean()
 
     nps_card = nps_card.avaliação
 
@@ -377,8 +437,7 @@ def home(request):
 
     ###NPS_DIA_GRÁFICO###
 
-    #df['nps_medio'] = df['nps_medio'].replace(np.nan,0)
-    df2 = df_item2.groupby(by=['data'], dropna=False).mean()
+    df2 = df2_df.groupby(by=['data'], dropna=False).mean()
     df2 = df2[['avaliação']]
     df2.reset_index(inplace=True)
 
@@ -405,7 +464,225 @@ def home(request):
     labels_pedidos_dia = pedido_dia['data'].tolist()
 
     ##LISTAS_LOJA_DROP_DOWN##
-    item_lista   = lojas.objects.values().filter(cliente = request.user)
+
+    item_lista  = lojas.objects.values().filter(cliente = request.user)
+
+                        ### METAS ###
+
+    ######dataframe tabela financeiro########
+
+    df_item5 = pd.DataFrame(item)
+
+    df_item5['data'] = pd.to_datetime(df_item5['data'], format='%Y-%m-%d')
+    df_item5['dayofweek'] = df_item5['data'].dt.strftime('%A')
+    df_item5['month'] = df_item5['data'].dt.strftime('%m')
+    df_financeiro = df_item5[['cliente', 'restaurante', 'data', 'faturamento_bruto', 'month', 'dayofweek']]
+    df_financeiro['dayofweek'] = df_financeiro['dayofweek'].str.lower()
+
+    ##########dataframe metas######
+    
+    item3  = metas.objects.values().filter(cliente = request.user)
+    df_metas = pd.DataFrame(item3)
+    df_metas['data'] = pd.to_datetime(df_metas['data'], format='%Y-%m-%d')
+    df_metas['month'] = df_metas['data'].dt.strftime('%m')
+    df_metas['dayofweek'] = df_metas['data'].dt.strftime('%A')
+    df_metas['dayofweek'] = df_metas['dayofweek'].str.lower()
+
+
+    df_concat = pd.merge(df_financeiro,
+                    df_metas[['cliente','restaurante', 'month', 'meta']],
+                    how = 'outer',
+                    on = ['month','cliente','restaurante']
+                    )
+    
+    for i in range(len(df_concat)):
+        if df_concat['month'][i][:1] == '0':
+            df_concat['month'][i] = df_concat['month'][i][1:]
+
+    #############dataframe metas por dia############
+
+    item4 = metas_dia.objects.values().filter(cliente = request.user)
+    df_perc_meta = pd.DataFrame(item4)
+    df_perc_meta = pd.melt(df_perc_meta,
+                        id_vars=['restaurante', 'cliente'],
+                        value_vars=['monday','tuesday','wednesday', 'thursday', 'friday', 'saturday', 'sunday']
+        )
+
+    df_perc_meta.rename(columns={'value':'percent', 'variable':'dayofweek'}, inplace=True)
+
+    ############dataframe final############
+
+    df_merge = pd.merge(df_concat,
+                 df_perc_meta[['cliente','restaurante','dayofweek', 'percent']],
+                 how = 'outer',
+                 on = ['dayofweek', 'cliente','restaurante']
+                )
+    df_merge['meta_real'] = df_merge['percent'] * df_merge['meta']
+    df_merge['month'] = df_merge['month'].astype(str)
+    for i in range(len(df_merge)):
+        if df_merge['month'][i][:1] == '0':
+            df_merge['month'][i] = df_merge['month'][i][1:]
+    
+    df_merge['dayofweek'] = df_merge['dayofweek'].str.lower()
+
+    df_date = pd.date_range("2022-01-01", periods=365, freq="d")
+    df_date = pd.DataFrame(columns = ['data'], data = df_date)
+    df_date['dayofweek'] = df_date['data'].dt.strftime('%A')
+    df_date['month'] = df_date['data'].dt.strftime('%m')
+    df_date['dayofweek'] = df_date['dayofweek'].str.lower()
+
+    for i in range(len(df_date)):
+        if df_date['month'][i][:1] == '0':
+            df_date['month'][i] = df_date['month'][i][1:]
+        
+    df_date = df_date.groupby(['month','dayofweek']).count()
+    df_date.reset_index(inplace=True)
+    df_date.rename(columns={'data':'count_dayofweek'}, inplace=True)
+
+    df_final = pd.merge(df_merge,
+                    df_date[['dayofweek','month', 'count_dayofweek']],
+                    how = 'inner',
+                    on = ['month','dayofweek']
+                    )
+
+
+    df_final['meta_dia'] = df_final['meta_real'] / df_final['count_dayofweek']
+
+    ###meta_taxa_efetiva###
+
+    card_meta_tx = round(df_metas['meta_tx'].mean(),2)
+    
+    card_meta_tx = '{:.2%}'.format(card_meta_tx)
+
+    ###gap_meta_tx###
+
+    print(card_meta_tx)
+    print(tx_efetiva_card)
+
+    if card_meta_tx=="0,0":
+        gap_card_meta_tx = '0'
+    else:
+        gap_card_meta_tx = round(float(tx_efetiva_card.replace('.','').replace(',','.').replace('%','.'))/float(card_meta_tx.replace('%','.').replace('.','').replace(',','.')) -1, 4)
+        gap_card_meta_tx = '{:.2%}'.format(gap_card_meta_tx)
+    
+    primeiro_digito_gap2 = gap_card_meta_tx[:1]
+
+    print(gap_card_meta_tx)
+
+    ### CARD_META_DO_DIA_ANTERIOR ###
+
+    card_meta_danterior = df_final[df_final['data'] == last_1days]
+
+    if name_loja == None:
+        card_meta_danterior = card_meta_danterior['meta_dia'].sum()
+
+    elif name_loja != "":
+        card_meta_danterior = card_meta_danterior[card_meta_danterior['restaurante'] == name_loja]
+        card_meta_danterior = card_meta_danterior['meta_dia'].sum()
+
+    else:
+        card_meta_danterior = card_meta_danterior['meta_dia'].sum()
+    
+    card_meta_danterior = round(card_meta_danterior,2)
+
+    card_meta_danterior = '{0:,}'.format(card_meta_danterior)
+    card_meta_danterior = card_meta_danterior.replace(',','.')
+
+    fim = card_meta_danterior[-3:].replace('.',',')
+    inicio = card_meta_danterior[:len(card_meta_danterior)-3]
+
+    card_meta_danterior = inicio + fim
+
+    ### CARD_META_DO_DIA_ATUAL ###
+
+    card_meta_datual = df_final[df_final['data'] == current_day]
+
+    if name_loja == None:
+        card_meta_datual = card_meta_datual['meta_dia'].sum()
+
+    elif name_loja != "":
+        card_meta_datual = card_meta_datual[card_meta_datual['restaurante'] == name_loja]
+        card_meta_datual = card_meta_datual['meta_dia'].sum()
+
+    else:
+        card_meta_datual = card_meta_datual['meta_dia'].sum()
+    
+    card_meta_datual = round(card_meta_datual,2)
+
+    card_meta_datual = '{0:,}'.format(card_meta_datual)
+    card_meta_datual = card_meta_datual.replace(',','.')
+
+    fim = card_meta_datual[-3:].replace('.',',')
+    inicio = card_meta_datual[:len(card_meta_datual)-3]
+
+    card_meta_datual = inicio + fim
+
+    ### CARD_FATURAMENTO_DIA_ANTERIOR ###
+
+    card_fat_danterior = df_final[df_final['data'] == last_1days]
+
+    if name_loja == None:
+        card_fat_danterior = card_fat_danterior['faturamento_bruto'].sum()
+
+    elif name_loja != "":
+        card_fat_danterior = card_fat_danterior[card_fat_danterior['restaurante'] == name_loja]
+        card_fat_danterior = card_fat_danterior['faturamento_bruto'].sum()
+
+    else:
+        card_fat_danterior = card_fat_danterior['faturamento_bruto'].sum()
+    
+    card_fat_danterior = round(card_fat_danterior,2)
+
+    card_fat_danterior = '{0:,}'.format(card_fat_danterior)
+    card_fat_danterior = card_fat_danterior.replace(',','.')
+
+    fim = card_fat_danterior[-3:].replace('.',',')
+    inicio = card_fat_danterior[:len(card_fat_danterior)-3]
+
+    card_fat_danterior = inicio + fim
+
+    ###gap_meta_fat_dia###
+
+    if card_fat_danterior=="0,0":
+        gap_meta_fat_dia_anterior = '0'
+    else:
+        gap_meta_fat_dia_anterior = round(float(card_fat_danterior.replace('.','').replace(',','.'))/float(card_meta_danterior.replace('.','').replace(',','.')) -1, 4)
+        gap_meta_fat_dia_anterior = '{:.2%}'.format(gap_meta_fat_dia_anterior)
+    
+    ###primeiro_digito###
+
+    primeiro_digito_gap = gap_meta_fat_dia_anterior[:1]
+    digito = '-'
+
+    ###meta faturamento bruto mensal###
+
+    meta_fat_bruto = df_final['meta_dia'].sum()
+    meta_fat_bruto = round(meta_fat_bruto,2)
+
+    meta_fat_bruto = '{0:,}'.format(meta_fat_bruto)
+    meta_fat_bruto = meta_fat_bruto.replace(',','.')
+
+    fim = meta_fat_bruto[-3:].replace('.',',')
+    inicio = meta_fat_bruto[:len(meta_fat_bruto)-3]
+
+    meta_fat_bruto = inicio + fim
+
+    print(df_final)
+
+    ###gap_meta_fat_mes###
+
+    print(faturamento_card)
+
+    if faturamento_card=="0,0":
+        gap_meta_fat_mes = '0'
+    else:
+        gap_meta_fat_mes = round(float(faturamento_card.replace('.','').replace(',','.'))/float(meta_fat_bruto.replace('.','').replace(',','.')) -1, 4)
+        gap_meta_fat_mes = '{:.2%}'.format(gap_meta_fat_mes)
+    
+
+    ###primeiro_digito###
+
+    primeiro_digito_gap1 = gap_meta_fat_mes[:1]
 
     ## DICIONÁRIO COM VALORES ##
 
@@ -421,6 +698,52 @@ def home(request):
 
     context={
 
+        ##card_meta_tx##
+
+        'card_meta_tx':card_meta_tx,
+
+        ##gap_card_meta_tx##
+
+        'gap_card_meta_tx':gap_card_meta_tx,
+
+        ##primeiro_digito2##
+
+        'primeiro_digito_gap2':primeiro_digito_gap2,
+
+        ###tx_efetiva_card###
+
+        'tx_efetiva_card':tx_efetiva_card,
+        
+        ###meta_fat_bruto##
+
+        'gap_meta_fat_mes': gap_meta_fat_mes,
+        'meta_fat_bruto':meta_fat_bruto,
+
+        ##primeiro_digito##
+
+        'primeiro_digito_gap1':primeiro_digito_gap1,
+
+        ##primeiro_digito##
+
+        'primeiro_digito_gap':primeiro_digito_gap,
+        'digito':digito,
+
+        ##card_gap_meta_fat_dia##
+
+        'gap_meta_fat_dia_anterior':gap_meta_fat_dia_anterior,
+
+        ###CARD_FAT_DIA_ANTERIOR###
+
+        'card_fat_danterior':card_fat_danterior,
+
+        ###CARD_META_DIA_ANTERIOR###
+
+        'card_meta_danterior':card_meta_danterior,
+
+        ###CARD_META_DIA_ATUAL###
+
+        'card_meta_datual':card_meta_datual,
+
         ##LOJA E DATAS ATUAL##
         
         'data_inicial':start_date,
@@ -431,11 +754,13 @@ def home(request):
 
         'incentivo_loja':incentivo_loja,
         'incentivo_ifood':incentivo_ifood,
+        'incentivo_geral':incentivo_geral,
 
         ###CANCELAMENTOS_CARD###
 
         'canc_restaurante':canc_restaurante,
         'canc_cliente':canc_cliente,
+        'cancelamento_total': cancelamento_total,
 
         ##LISTAS_LOJA_DROP_DOWN##
 

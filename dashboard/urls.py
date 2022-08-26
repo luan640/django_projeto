@@ -8,7 +8,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('home/', include('minha_dashboard.urls')),
     path('login/', views.login_user),
-    path('login/submit', views.submit_login),	
+    path('login/submit', views.submit_login),
 
 ]
 

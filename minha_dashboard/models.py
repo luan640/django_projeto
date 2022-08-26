@@ -1,3 +1,4 @@
+from calendar import TUESDAY
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -130,5 +131,35 @@ class lojas(models.Model):
     class Meta:
         managed = False
         db_table = 'lojas'
+    def __str__(self):
+        return self.cliente
+
+class metas_dia(models.Model):
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    restaurante  = models.CharField(db_column='restaurante', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    monday  = models.FloatField(db_column='monday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    tuesday  = models.FloatField(db_column='tuesday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    wednesday  = models.FloatField(db_column='wednesday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    thursday  = models.FloatField(db_column='thursday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    friday  = models.FloatField(db_column='friday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    saturday  = models.FloatField(db_column='saturday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    sunday  = models.FloatField(db_column='sunday', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'metas_dia'
+    def __str__(self):
+        return self.cliente
+
+class metas(models.Model):
+    cliente = models.CharField(db_column='cliente', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    restaurante  = models.CharField(db_column='restaurante', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    data  = models.DateField(db_column='data', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    meta  = models.FloatField(db_column='meta', max_length=255, blank=True, null=True)  # Field name made lowercase.
+    meta_tx  = models.FloatField(db_column='meta_tx', max_length=255, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'metas'
     def __str__(self):
         return self.cliente

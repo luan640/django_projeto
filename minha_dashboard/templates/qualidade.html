@@ -9,10 +9,9 @@
 
 {% block 'body' %}
 
-<body style="background-color:#fafafa;">
+<body style="background-color:#181735;">
 
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
 <style>
 
@@ -21,14 +20,14 @@
 }
 
 .bg-igrowth{
-    background-color: #ffffff;
-    color: rgb(0, 0, 0);
+    background-color: #242549;
+    color: white;
 }
   
 .button1 {
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
     text-align: center;  
-    color:rgb(0, 0, 0);
+    color:white;
 
 }
 
@@ -78,7 +77,7 @@
   z-index: 1;
   top: 0;
   left: 0;
-  background-color: #fafafa;
+  background-color: #181735;
   overflow-x: hidden;
   transition: 0.5s;
   padding-top: 90px;
@@ -100,7 +99,6 @@
   right: 25px;
   font-size: 36px;
   margin-left: 50px;
-  color:#000
 }
 
 @media screen and (max-height: 120px) {
@@ -134,7 +132,7 @@
 
 .title-side{
 
-color:rgb(0, 0, 0);
+color:white;
 text-align: center;
 }
 
@@ -142,99 +140,17 @@ text-align: center;
 </style>
 
 <style>
-
-.wrap {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button {
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-  }
-
-.button:hover {
-  background-color: #2EE59D;
-  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
-}
-
-#logout_sidebar_button {
-    position: absolute;
-    bottom: 100;
-}
-
-</style>
-
-<style>
-
-.logout_button {
-  height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.button_logout {
-  width: 140px;
-  height: 45px;
-  font-family: 'Roboto', sans-serif;
-  font-size: 11px;
-  text-transform: uppercase;
-  letter-spacing: 2.5px;
-  font-weight: 500;
-  color: #000;
-  background-color: #fff;
-  border: none;
-  border-radius: 45px;
-  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease 0s;
-  cursor: pointer;
-  outline: none;
-  }
-
-.button_logout:hover {
-  background-color: #d11818;
-  box-shadow: 0px 15px 20px rgba(216, 34, 10, 0.4);
-  color: #fff;
-  transform: translateY(-7px);
-}
-
-#logout_sidebar_button {
-    position: absolute;
-    bottom: 100;
-}
-
-</style>
-
-<style>
     h2.headings {margin-bottom: 20px;}
-    .stat-card h3{font-size: 16px; margin-top: 5px; line-height: 20px; padding-right: 45px; color: #333; text-align; left;border-radius: 0.75rem} 
-    .stat-card {position: relative; display: inline-block; background-color: rgba(255, 255, 255, 0.959); width: 320px; min-height: 170px; text-align: left; padding: 15px; overflow: hidden;border-radius: 0.75rem}
-    .stat-icon {position: absolute;top: 0px;right: 0px;width: 60px;height: 60px;line-height: 60px;text-align: center;border-radius: 0.75rem}
-    .stat-icon.right {right: 0px;font-family: Arial, Helvetica, sans-serif;}
-    .stat-icon span {position: absolute;z-index: 8;top: -40px; left: 5px; width: 100px;height: 100px; line-height: 120px;border-radius: 0.75rem;}
-    .stat-icon i {padding-left: 15px; color: rgb(255, 255, 255); z-index: 9; font-size: 24px;border-radius: 0.75rem}
+    .stat-card h3{font-size: 16px; margin-top: 5px; line-height: 20px; padding-right: 45px; color: #333; text-align; left;} 
+    .stat-card {position: relative; display: inline-block; background-color: #fff; width: 320px; min-height: 170px; text-align: left; padding: 15px; border-width: 1px;border-style: solid; border-color: rgb(204, 204, 204); border-image: initial; overflow: hidden;}
+    .stat-icon {position: absolute;top: 0px;right: 0px;width: 60px;height: 60px;line-height: 60px;text-align: center;}
+    .stat-icon.right {right: 0px;}
+    .stat-icon span {position: absolute;z-index: 8;top: -40px; left: 5px; width: 100px;height: 100px; line-height: 120px;border-radius: 50%;}
+    .stat-icon i {padding-left: 15px; color: rgb(255, 255, 255); z-index: 9; font-size: 24px;}
     .bg-target {background-color: #E07000;}
     .txt-target {color: #E07000;}
     .bg-ontrack {background-color: #007613;}
-    .txt-ontrack {color: #007613; font-family: 'Times New Roman', Times, serif;}
+    .txt-ontrack {color: #007613;}
     .bg-failing {background-color: #D43E3A;}
     .txt-failing {color: #D43E3A;}
     .bg-measure {background-color: #186EA5;}
@@ -244,6 +160,7 @@ text-align: center;
     .stat-card .source {font-size: 12px; margin-top: 15px;}
     .stat-card .open-btn {margin-top: 15px;}
 </style>
+
 
 <div class = "container">
     <div id="mySidenav" class="sidenav button1">
@@ -271,32 +188,30 @@ text-align: center;
                     <br>
                     <div class="row">
                         <label>Data início: </label>
-                        <input name="start_date" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start">
+                        <input class="form-control-md-4 form_date" name='start_date' type="date">
                     </div>
                     <br>
                     <div class="row">
                         <label>Data fim: </label>
-                        <input name="end_date" type="date" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Select date start">
+                        <input class="form-control-md-4 form_date" name='end_date' type="date">
                     </div>
                     <br>
                     <div class="row">
-                        <div class = "wrap">
-                            <button class="button" type="submit">Filtrar</button>
-                        </div>
-                    </div>
-                    
-                    <br>
-
-                    <div class = "logout_button">
-                        <form action="{% url 'logout' %}" method="post">
-                            {% csrf_token %}
-                            <button id = 'logout_sidebar_button' class="button_logout" type="submit">Logout</button>
-                            </button>
-                        </form>
+                        <button class="btn btn-primary btn-lg align-items-center button1" type="submit">Filtrar</button>
                     </div>
 
                 </form>
 
+                <br>
+
+                <div class="row">
+                        <form action="{% url 'logout' %}" method="post">
+                            {% csrf_token %}
+                            <button style="background-color:red;border-color: red;" class="btn btn-primary btn-lg align-items-center button1" type="submit">
+                                LOGOUT
+                            </button>
+                        </form>
+                </div>
 
             </div>
         </div>
@@ -309,12 +224,12 @@ text-align: center;
     <div class="row">
         
         <div class="col-3">
-            <span style="font-size:30px;cursor:pointer;color:rgb(0, 0, 0);" onclick="openNav()">&#9776; Menu</span>
+            <span style="font-size:30px;cursor:pointer;color:white;" onclick="openNav()">&#9776; Menu</span>
         </div>
     
         <div class="col-3">
             <div class="card border-dark mb-3 button1 bg-igrowth" style="width: 40rem;">
-                <table style="color:rgb(0, 0, 0);">
+                <table style="color:white;">
                     <tr align = "center">
                     <th style="width: 40%">Restaurante</th>
                     <th style="width: 40%">Data inicial</th>
@@ -337,91 +252,96 @@ text-align: center;
 
     <div class = 'row'>
         <div class = 'col-md'>
-
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>Faturamento diário d-1</h3>
-                <h4 class="stat-num"><span class="txt-ontrack">R$ {{card_fat_danterior}}</span></h4>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Meta: <strong>R$ {{card_meta_danterior}}</strong></div>
-                {% if primeiro_digito_gap == digito %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_meta_fat_dia_anterior}} </strong><i class="fa fa-arrow-circle-down" style="color:red"></i></div>
-                {% else %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_meta_fat_dia_anterior}} </strong><i class="fa fa-arrow-circle-up" style="color:green"></i></div>
-                {% endif %}
-            </div>
             
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
+            <div class="stat-card">
+                <div class="stat-icon right"><span class="card border-dark mb-3 bg-igrowth button1"></span><i class="glyphicon glyphicon-home"></i></div>
                 <h3>Faturamento mensal</h3>
                 <h4 class="stat-num"><span class="txt-ontrack">R$ {{faturamento_card}}</span></h4>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Meta: <strong>R$ {{meta_fat_bruto}}</strong></div>
-                {% if primeiro_digito_gap1 == digito %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_meta_fat_mes}} </strong><i class="fa fa-arrow-circle-down" style="color:red"></i></div>
-                {% else %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_meta_fat_mes}} </strong><i class="fa fa-arrow-circle-up" style="color:green"></i></div>
-                {% endif %}
+                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> percent occupied of <strong>goal: 100%</strong></div>
+                <div class="source">Source: <a href="#">Graydale Housing Authority</a></div>
             </div>
 
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
+            <div class="stat-card">
+                <div class="stat-icon right"><span class="card border-dark mb-3 bg-igrowth button1"></span><i class="glyphicon glyphicon-home"></i></div>
                 <h3>Ticket médio</h3>
                 <h4 class="stat-num"><span class="txt-ontrack">R$ {{ticket_card}}</span></h4>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i><strong></strong></div>
+                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> percent occupied of <strong>goal: 100%</strong></div>
+                <div class="source">Source: <a href="#">Graydale Housing Authority</a></div>
             </div>
 
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>Total de pedidos</h3>
-                <h4 class="stat-num"><span class="txt-ontrack">  {{num_pedidos}}</span></h4>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i><strong></strong></div>
-            </div>
-
-        </div>
-    </div>
-
-
-    <div class = 'row'>
-        <div class = 'col-md'>
-
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>NPS</h3>
-                <h4 class="stat-num"><span class="txt-ontrack">  {{nps_card}}</span></h4>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i><strong></strong></div>
-            </div>
-
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>Incentivos</h3>
-                <h2 class="stat-num"><span class="txt-ontrack">R$ {{incentivo_geral}}</span></h2>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i>Loja: R$ <strong>{{incentivo_loja}}</strong></div>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i>Ifood: R$ <strong>{{incentivo_ifood}}</strong></div>
-            </div>
-
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>Cancelamentos</h3>
-                <h2 class="stat-num"><span class="txt-ontrack">R$ {{cancelamento_total}}</span></h2>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i>Loja: R$ <strong>{{canc_restaurante}}</strong></div>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i>Cliente: R$ <strong>{{canc_cliente}}</strong></div>
-            </div>
-
-            <div class="stat-card button1">
-                <div class="stat-icon right"><i class="glyphicon glyphicon-home"></i></div>
-                <h3>Taxa efetiva</h3>
-                <h2 class="stat-num"><span class="txt-ontrack">{{tx_efetiva_card}}</span></h2>
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Meta: <strong>{{card_meta_tx}}</strong></div>
-                {% if primeiro_digito_gap2 == digito %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_card_meta_tx}} </strong><i class="fa fa-arrow-circle-up" style="color:green"></i></div>
-                {% else %}
-                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> Gap: <strong>{{gap_card_meta_tx}} </strong><i class="fa fa-arrow-circle-down" style="color:red"></i></div>
-                {% endif %}
+            <div class="stat-card">
+                <div class="stat-icon right"><span class="card border-dark mb-3 bg-igrowth button1"></span><i class="glyphicon glyphicon-home"></i></div>
+                <h3>Ticket médio</h3>
+                <h4 class="stat-num"><span class="txt-ontrack">R$ {{num_pedidos}}</span></h4>
+                <div class="subtext"><i class="glyphicon glyphicon-triangle-top txt-ontrack"></i> percent occupied of <strong>goal: 100%</strong></div>
+                <div class="source">Source: <a href="#">Graydale Housing Authority</a></div>
             </div>
 
         </div>
     </div>
 
+    <div class="row">  
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Total de pedidos</div>
+                <div class="card-body">
+                <h6 class="card-title"></svg> &nbspR$ {{faturamento_card}}<span id="faturamento_total"></span></h6>
+                </div>
+            </div>
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Ticket médio</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbspR$ {{ticket_card}}<span id="ticket_medio"></span></h5>
+            </div>
+        </div>
+    </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem;">
+                <div class="card-header">Total de pedidos</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbsp {{num_pedidos}}<span id="total_pedidos"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 11rem;">
+                <div class="card-header">NPS</div>
+                <div class="card-body">
+                <h5 class="card-title"></svg> &nbsp {{nps_card}}<span id="nps_medio"></span></h5>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 12rem;">
+                <div class="card-header">Incentivos</div>
+                <div class="card-body">
+                  <h6 class="card-title">Loja</h6>
+                  <p class="card-text"> &nbsp {{incentivo_loja}}</p>
+                  <h6 class="card-title">Ifood</h6>
+                  <p class="card-text"> &nbsp {{incentivo_ifood}}</p>
+                </div>
+              </div>
+        </div>
+
+        <div class="col-md">
+            <div class="card border-dark mb-3 bg-igrowth button1" style="max-width: 20rem; max-height: 12rem;">
+                <div class="card-header">Cancelamentos</div>
+                <div class="card-body">
+                  <h6 class="card-title">Loja</h6>
+                  <p class="card-text"> &nbsp {{canc_restaurante}}</p>
+                  <h6 class="card-title">Cliente</h6>
+                  <p class="card-text"> &nbsp {{canc_cliente}}</p>
+                </div>
+              </div>
+        </div>
 
     </div>
 </div>
@@ -671,20 +591,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
         ]
     },
     options: {
-
-        scales: {
-                x: {
-                    grid:{
-                        display:false
-                    }
-                },
-                y: {
-                    grid:{
-                        display:false
-                    }
-                }
-                },
-        
         elements: {
                     point:{
                         radius: 0
@@ -751,20 +657,13 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                 scales: {
                 x: {
                     stacked: true,
-                    grid:{
-                        display:false
-                    }
                 },
                 y: {
-                    stacked: true,
-                    grid:{
-                        display:false
-                    }
+                    stacked: true
                 }
                 }
             }
     });
-
 
 </script>
 
@@ -799,20 +698,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
         ]
     },
     options: {
-
-        scales: {
-                x: {
-                    grid:{
-                        display:false
-                    }
-                },
-                y: {
-                    grid:{
-                        display:false
-                    }
-                }
-                },
-
         elements: {
                     point:{
                         radius: 0
@@ -859,6 +744,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             borderColor: "#56C596",
             yAxisID: 'A',
             borderWidth: 1,
+            datalabels:{
+                anchor:'end',
+                color:'white'
+            }
             },   
             {
             type:'bar',
@@ -868,6 +757,10 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
             borderColor: "#329D9C",
             yAxisID: 'B',
             borderWidth: 0.2,
+            datalabels:{
+                anchor:'center',
+                color:'white'
+            }
             },
             ]
         },
@@ -890,30 +783,24 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                   }
                 },
                 scales: {
-
-                    x:{
-                        grid:{
-                            display: false
-                        }
-
-                    },
-
                   A: {
+                    type: 'linear',
+                    display: true,
                     position: 'left',
-                    grid: {
-                        display: false,
-                        drawOnChartArea: false
-                    },
                   },
                   B: {
+                    type: 'linear',
+                    display: true,
                     position: 'right',
+            
+                    // grid line settings
                     grid: {
-                        display: false,
-                        drawOnChartArea: false
+                      drawOnChartArea: false, // only want the grid lines for one axis to show up
                     },
                   },
                 }
             },
+            plugins:[ChartDataLabels]
     });
 
 </script>
@@ -974,21 +861,14 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                   }
                 },
                 scales: {
-
-                    x: {
-                    grid:{
-                        display:false
-                        }
-                    },
-
                   A: {
                     type: 'linear',
-                    display: false,
+                    display: true,
                     position: 'left',
                   },
                   B: {
                     type: 'linear',
-                    display: false,
+                    display: true,
                     position: 'right',
             
                     // grid line settings
@@ -1026,21 +906,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
         },
 
         options: {
-
-            scales:{
-            x:{
-                grid:{
-                    display: false
-                }
-            },
-            y:{
-                grid:{
-                    display: false
-                }
-            }
-        
-            },
-            
             elements: {
                     point:{
                         radius: 0
@@ -1070,9 +935,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
                             }
                         }
                     }
-
-            
-            }
+            },
                 
     });
 
@@ -1101,19 +964,6 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
         },
 
         options: {
-            scales:{
-                x:{
-                grid:{
-                    display: false
-                },
-            },
-                y:{
-                    grid:{
-                    display: false
-                }
-                }
-                
-            },
             elements: {
                     point:{
                         radius: 0
@@ -1141,7 +991,7 @@ crossorigin="anonymous" referrerpolicy="no-referrer">
 
 <script>
     function openNav() {
-      document.getElementById("mySidenav").style.width = "200px";
+      document.getElementById("mySidenav").style.width = "300px";
     }
     
     function closeNav() {
