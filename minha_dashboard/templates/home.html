@@ -287,16 +287,14 @@ text-align: center;
                     
                     <br>
 
-                    <div class = "logout_button">
-                        <form action="{% url 'logout' %}" method="post">
-                            {% csrf_token %}
-                            <button id = 'logout_sidebar_button' class="button_logout" type="submit">Logout</button>
-                            </button>
-                        </form>
-                    </div>
-
                 </form>
 
+                <form action="{% url 'logout' %}" method="post">
+                    <div class = "logout_button">
+                        {% csrf_token %}
+                        <button id = 'logout_sidebar_button' class="button_logout" type="submit">Logout</button>
+                    </div>
+                </form>
 
             </div>
         </div>
