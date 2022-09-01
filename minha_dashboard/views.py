@@ -31,6 +31,9 @@ desc_last_day = desc_last_day.lower()
 last_1days = (today - timedelta(1)).strftime('%Y-%m-%d') 
 current_day = (today - timedelta(1)).strftime('%Y-%m-%d') 
 
+if today.day == 1:
+    month_current = month_current - 1
+
 def login_user(request):
     return render(request, 'login.html')
 
@@ -88,6 +91,8 @@ def home(request):
 
     df = pd.DataFrame(item)
 
+    print(request.user)
+
     item2 = avaliacao.objects.values().filter(cliente = request.user)
     df2 = pd.DataFrame(item2)
     df2.rename(columns={'loja':'restaurante', 'data':'data_data', 'data_da_avaliação':'data'}, inplace=True)
@@ -108,7 +113,7 @@ def home(request):
         
     ###LISTAS##
 
-##tabela promocao
+    ##tabela promocao
 
     if name_loja == None:
         lista1 = promocoes.objects.filter(cliente = request.user, data = today0)
@@ -117,7 +122,7 @@ def home(request):
     else:
         lista1 = promocoes.objects.filter(cliente = request.user, data = today0)
 
-##tabela tempos
+    ##tabela tempos
     
     if name_loja == None:
         lista2 = tempo.objects.filter(cliente = request.user, data = today0)
@@ -126,7 +131,7 @@ def home(request):
     else:
         lista2 = tempo.objects.filter(cliente = request.user, data = today0)
 
-##tabela avaliações
+    ##tabela avaliações
 
     if name_loja == None:
         lista3 = avaliacao.objects.filter(cliente = request.user, data_da_avaliação__range = [last_5days, today0])
@@ -135,7 +140,7 @@ def home(request):
     else:
         lista3 = avaliacao.objects.filter(cliente = request.user, data_da_avaliação__range = [last_5days, today0])
 
-##tabela listas
+    ##tabela listas
 
     if name_loja == None:
         lista4 = lista.objects.filter(cliente = request.user, data = today0)
@@ -144,7 +149,7 @@ def home(request):
     else:
         lista4 = lista.objects.filter(cliente = request.user, data = today0)
 
-##tabela disponibilidade
+    ##tabela disponibilidade
 
     if name_loja == None:
         lista0 = disponibilidade.objects.filter(cliente= request.user, data = today0)
@@ -160,8 +165,6 @@ def home(request):
     card_fat_danterior = df['faturamento_bruto'].sum()
     
     print(card_fat_danterior)
-
-    
 
     ###INCENTIVOS_CARD###
 
