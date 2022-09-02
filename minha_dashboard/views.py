@@ -65,19 +65,24 @@ def home(request):
 
         if start_date != "" and end_date != "" and name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user, restaurante = name_loja)
- 
+            item10 = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
+
             print('1')
         elif name_loja != "" and name_loja != None:
             item = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
+            item10 = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
 
             print('2')
         elif start_date != "" and end_date != "":
             item = nc_financeiro.objects.values().filter(data__range = [start_date, end_date], cliente = request.user)
+            item10 = nc_financeiro.objects.values().filter(cliente = request.user, restaurante = name_loja, mes = month_current)
 
             print('3')
 
     else:
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+        item10 = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
+
         print('4')
     try:
         df=pd.DataFrame(item)
@@ -91,16 +96,23 @@ def home(request):
 
     df = pd.DataFrame(item)
 
-    print(request.user)
-
     item2 = avaliacao.objects.values().filter(cliente = request.user)
     df2 = pd.DataFrame(item2)
-    df2.rename(columns={'loja':'restaurante', 'data':'data_data', 'data_da_avaliação':'data'}, inplace=True)
-    df2 = df2[['cliente','restaurante','data', 'avaliação']]
+    df3 = pd.DataFrame(item2)
+
+    df3.rename(columns={'loja':'restaurante'}, inplace=True)
+    df3 = df3[['cliente','restaurante','data', 'avaliação']] 
+    
+    df3 = pd.merge(df, df3, how = 'outer', on = ['restaurante','cliente','data'])
+    df3 = df3[df3['id'].notna()]
+
+    df2.rename(columns={'loja':'restaurante'}, inplace=True)
+    df2 = df2[['cliente','restaurante','data', 'avaliação']] 
     
     df2_df = pd.merge(df, df2, how = 'outer', on = ['restaurante','cliente','data'])
     df2_df = df2_df[df2_df['faturamento_bruto'].notna()]
-    
+
+    #df2_df = df2_df.drop_duplicates()
 
     df['cancelamento_pelo_restaurante'] = df['cancelamento_pelo_restaurante'].replace(np.nan,0)
     df['cancelamento_pelo_cliente'] = df['cancelamento_pelo_cliente'].replace(np.nan,0)
@@ -163,8 +175,6 @@ def home(request):
     df['data'] = pd.to_datetime(df['data'])
     card_fat_danterior = df[df['data'] == last_1days]
     card_fat_danterior = df['faturamento_bruto'].sum()
-    
-    print(card_fat_danterior)
 
     ###INCENTIVOS_CARD###
 
@@ -295,8 +305,6 @@ def home(request):
 
     tx_efetiva_card = '{:.2%}'.format(tx_efetiva_card)
 
-    print(tx_efetiva_card)
-
     ###TICKET_MEDIO_CARD###
 
     if name_loja == None:
@@ -416,12 +424,27 @@ def home(request):
     fat_dia1 = fat_dia['faturamento_bruto'].tolist()
     labels_fat_dia = fat_dia['data'].tolist()
 
+    ###NPS_DIA_GRÁFICO###
+
+    df2 = df2_df.groupby(by=['data'], dropna=False).mean()
+    df2 = df2[['avaliação']]
+    df2.reset_index(inplace=True)
+
+    df2['data'] = pd.to_datetime(df2['data'])
+    df2['mes'] = df2['data'].dt.month
+    #df2 = df2[df2['mes'] == month_current]
+    df2['data'] = df2['data'].dt.strftime('%Y-%m-%d')
+    df2 = df2.replace(np.nan,'')
+
+    nps_dia = df2['avaliação'].tolist()
+    labels_nps = df2['data'].tolist()
+
     ###NPS_CARD###
     
     df2_df['avaliação'] = df2_df['avaliação'].replace(np.nan,0)
     df2_df['data'] = pd.to_datetime(df2_df['data'])
     df2_df['mes'] = df2_df['data'].dt.month
-    df2_df = df2_df[df2_df['mes'] == month_current]
+    #df2_df = df2_df[df2_df['mes'] == month_current]
 
     if name_loja == None:
         nps_card = df2_df[df2_df['avaliação'] != 0].mean()
@@ -437,20 +460,6 @@ def home(request):
 
     if math.isnan(float(nps_card)):
         nps_card = 0
-
-    ###NPS_DIA_GRÁFICO###
-
-    df2 = df2_df.groupby(by=['data'], dropna=False).mean()
-    df2 = df2[['avaliação']]
-    df2.reset_index(inplace=True)
-
-    df2['data'] = pd.to_datetime(df2['data'])
-    df2['mes'] = df2['data'].dt.month
-    df2 = df2[df2['mes'] == month_current]
-    df2['data'] = df2['data'].dt.strftime('%Y-%m-%d')
-
-    nps_dia = df2['avaliação'].tolist()
-    labels_nps = df2['data'].tolist()
         
     ###PEDIDOS_DIA_GRÁFICO###
 
@@ -559,8 +568,6 @@ def home(request):
 
     ###gap_meta_tx###
 
-    print(card_meta_tx)
-    print(tx_efetiva_card)
 
     if card_meta_tx=="0,0":
         gap_card_meta_tx = '0'
@@ -570,7 +577,6 @@ def home(request):
     
     primeiro_digito_gap2 = gap_card_meta_tx[:1]
 
-    print(gap_card_meta_tx)
 
     ### CARD_META_DO_DIA_ANTERIOR ###
 
@@ -670,19 +676,17 @@ def home(request):
 
     meta_fat_bruto = inicio + fim
 
-    print(df_final)
-
     ###gap_meta_fat_mes###
-
-    print(faturamento_card)
 
     if faturamento_card=="0,0":
         gap_meta_fat_mes = '0'
     else:
-        gap_meta_fat_mes = round(float(faturamento_card.replace('.','').replace(',','.'))/float(meta_fat_bruto.replace('.','').replace(',','.')) -1, 4)
-        gap_meta_fat_mes = '{:.2%}'.format(gap_meta_fat_mes)
+        try:
+            gap_meta_fat_mes = round(float(faturamento_card.replace('.','').replace(',','.'))/float(meta_fat_bruto.replace('.','').replace(',','.')) -1, 4)
+            gap_meta_fat_mes = '{:.2%}'.format(gap_meta_fat_mes)
+        except:
+            gap_meta_fat_mes = str(0)
     
-
     ###primeiro_digito###
 
     primeiro_digito_gap1 = gap_meta_fat_mes[:1]
@@ -698,6 +702,11 @@ def home(request):
     except:
         start_date = ""
         end_date = ""
+
+    
+    df_teste = pd.DataFrame(item10)
+    print(df_teste)
+
 
     context={
 
