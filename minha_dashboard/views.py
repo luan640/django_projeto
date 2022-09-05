@@ -101,6 +101,7 @@ def home(request):
     df3 = pd.DataFrame(item2)
 
     df3.rename(columns={'loja':'restaurante'}, inplace=True)
+    print(df3)
     df3 = df3[['cliente','restaurante','data', 'avaliação']] 
     
     df3 = pd.merge(df, df3, how = 'outer', on = ['restaurante','cliente','data'])
