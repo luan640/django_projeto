@@ -703,10 +703,6 @@ def home(request):
         start_date = ""
         end_date = ""
 
-    
-    df_teste = pd.DataFrame(item10)
-    print(df_teste)
-
 
     context={
 
