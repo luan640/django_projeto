@@ -658,13 +658,17 @@ def home(request):
     if card_fat_danterior=="0,0":
         gap_meta_fat_dia_anterior = '0'
     else:
-        gap_meta_fat_dia_anterior = round(float(card_fat_danterior.replace('.','').replace(',','.'))/float(card_meta_danterior.replace('.','').replace(',','.')) -1, 4)
-        gap_meta_fat_dia_anterior = '{:.2%}'.format(gap_meta_fat_dia_anterior)
-    
+        try:
+            gap_meta_fat_dia_anterior = round(float(card_fat_danterior.replace('.','').replace(',','.'))/float(card_meta_danterior.replace('.','').replace(',','.')) -1, 4)
+            gap_meta_fat_dia_anterior = '{:.2%}'.format(gap_meta_fat_dia_anterior)
+        except:
+            gap_meta_fat_dia_anterior = '0'
     ###primeiro_digito###
 
     primeiro_digito_gap = gap_meta_fat_dia_anterior[:1]
     digito = '-'
+
+    print(gap_meta_fat_dia_anterior)
 
     ###meta faturamento bruto mensal###
 
