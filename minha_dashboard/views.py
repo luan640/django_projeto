@@ -629,6 +629,7 @@ def home(request):
     ### CARD_FATURAMENTO_DIA_ANTERIOR ###
 
     card_fat_danterior = df_final[df_final['data'] == last_1days]
+    card_fat_danterior = card_fat_danterior.drop_duplicates(subset="data")
 
     if name_loja == None:
         card_fat_danterior = card_fat_danterior['faturamento_bruto'].sum()
@@ -649,6 +650,8 @@ def home(request):
     inicio = card_fat_danterior[:len(card_fat_danterior)-3]
 
     card_fat_danterior = inicio + fim
+
+
 
     ###gap_meta_fat_dia###
 
