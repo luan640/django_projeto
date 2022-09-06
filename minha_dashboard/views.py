@@ -93,15 +93,13 @@ def home(request):
         item = nc_financeiro.objects.values().filter(cliente = request.user, mes = month_current)
         print('6')
 
-
     df = pd.DataFrame(item)
-
+    
     item2 = avaliacao.objects.values().filter(cliente = request.user)
     df2 = pd.DataFrame(item2)
     df3 = pd.DataFrame(item2)
 
     df3.rename(columns={'loja':'restaurante'}, inplace=True)
-    print(df3)
     df3 = df3[['cliente','restaurante','data', 'avaliação']] 
     
     df3 = pd.merge(df, df3, how = 'outer', on = ['restaurante','cliente','data'])
@@ -582,6 +580,9 @@ def home(request):
     ### CARD_META_DO_DIA_ANTERIOR ###
 
     card_meta_danterior = df_final[df_final['data'] == last_1days]
+    card_meta_danterior = card_meta_danterior.drop_duplicates(subset=['data', 'restaurante'])
+
+    print(card_meta_danterior)
 
     if name_loja == None:
         card_meta_danterior = card_meta_danterior['meta_dia'].sum()
@@ -669,9 +670,8 @@ def home(request):
     primeiro_digito_gap = gap_meta_fat_dia_anterior[:1]
     digito = '-'
 
-    print(gap_meta_fat_dia_anterior)
-
     ###meta faturamento bruto mensal###
+    df_final = df_final.drop_duplicates(subset=['data','restaurante'])
 
     meta_fat_bruto = df_final['meta_dia'].sum()
     meta_fat_bruto = round(meta_fat_bruto,2)
