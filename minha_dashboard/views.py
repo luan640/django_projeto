@@ -576,7 +576,6 @@ def home(request):
     
     primeiro_digito_gap2 = gap_card_meta_tx[:1]
 
-
     ### CARD_META_DO_DIA_ANTERIOR ###
 
     card_meta_danterior = df_final[df_final['data'] == last_1days]
@@ -631,7 +630,8 @@ def home(request):
     ### CARD_FATURAMENTO_DIA_ANTERIOR ###
 
     card_fat_danterior = df_final[df_final['data'] == last_1days]
-    card_fat_danterior = card_fat_danterior.drop_duplicates(subset="data")
+    card_fat_danterior = card_fat_danterior.drop_duplicates(subset="restaurante")
+    print(card_fat_danterior)
 
     if name_loja == None:
         card_fat_danterior = card_fat_danterior['faturamento_bruto'].sum()
@@ -652,7 +652,6 @@ def home(request):
     inicio = card_fat_danterior[:len(card_fat_danterior)-3]
 
     card_fat_danterior = inicio + fim
-
 
 
     ###gap_meta_fat_dia###
